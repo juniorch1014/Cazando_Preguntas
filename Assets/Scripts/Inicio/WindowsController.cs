@@ -9,6 +9,9 @@ public class WindowsController : MonoBehaviour
     public GameObject ventanaInSesion;
     public GameObject ventanaInicio;
     public GameObject ventanaCRUD_Pregunta;
+    public GameObject ventanaRegistrar_Pregunta;
+    public GameObject ventanaActualizar_Pregunta;
+    public GameObject ventanaRegistrar_DocEst;
     public GameObject bt_Preguntas;
     public GameObject bt_PreguntasText;
 
@@ -40,6 +43,14 @@ public class WindowsController : MonoBehaviour
         ventanaInicio.SetActive(false);
         ventanaLogin.SetActive(true);
     }
+//***Docente_Registrar
+    public void MostrarVenRegistrarDoc (){
+        ventanaRegistrar_DocEst.SetActive(true);
+    }
+    public void OcultarVenRegistrarDoc (){
+        ventanaRegistrar_DocEst.SetActive(false);
+    }
+
 //***CRUD_Pregunta
     public void MostrarVCRUD_Pregunta (){
         ventanaInicio.SetActive(false);
@@ -58,7 +69,24 @@ public class WindowsController : MonoBehaviour
         bt_Preguntas.SetActive(false);
         bt_PreguntasText.SetActive(false);
     }
-
+//***PREGUTAS Registrar
+    public void MostrarVenRegistrarPregunta(){
+        ventanaRegistrar_Pregunta.SetActive(true);
+        ventanaCRUD_Pregunta.SetActive(false);
+    }
+    public void OcultarVenRegistrarPregunta(){
+        ventanaRegistrar_Pregunta.SetActive(false);
+        ventanaCRUD_Pregunta.SetActive(true);
+    }
+//***PREGUNTAS Actualizar
+    public void MostrarVenActualizarPregunta(){
+        ventanaActualizar_Pregunta.SetActive(true);
+        ventanaCRUD_Pregunta.SetActive(false);
+    }
+    public void OcultarVenActualizarPregunta(){
+        ventanaActualizar_Pregunta.SetActive(false);
+        ventanaCRUD_Pregunta.SetActive(true);
+    }
 //***Salir
     public void SalirPlay(){
         #if UNITY_EDITOR

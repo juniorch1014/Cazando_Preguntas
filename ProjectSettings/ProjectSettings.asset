@@ -153,7 +153,9 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Android: com.DefaultCompany.puzzle_imple
+    Standalone: com.DefaultCompany.puzzle-imple
   buildNumber:
     Standalone: 0
     VisionOS: 0
