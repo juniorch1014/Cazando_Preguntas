@@ -12,8 +12,11 @@ public class WindowsController : MonoBehaviour
     public GameObject ventanaRegistrar_Pregunta;
     public GameObject ventanaActualizar_Pregunta;
     public GameObject ventanaRegistrar_DocEst;
+    public GameObject ventanaRegistrar_Estudiante;
     public GameObject bt_Preguntas;
     public GameObject bt_PreguntasText;
+    public GameObject bt_REstudiante;
+    public GameObject bt_REstudianteText;
 
     // Start is called before the first frame update
     void Start()
@@ -46,9 +49,22 @@ public class WindowsController : MonoBehaviour
 //***Docente_Registrar
     public void MostrarVenRegistrarDoc (){
         ventanaRegistrar_DocEst.SetActive(true);
+        ventanaLogin.SetActive(false);
+
     }
     public void OcultarVenRegistrarDoc (){
         ventanaRegistrar_DocEst.SetActive(false);
+        ventanaLogin.SetActive(true);
+
+    }
+//***Estudiante_Registrar
+    public void MostrarVenRegistrarEst (){
+        ventanaRegistrar_Estudiante.SetActive(true);
+        ventanaInicio.SetActive(false);
+    }
+    public void OcultarVenRegistrarEst (){
+        ventanaRegistrar_Estudiante.SetActive(false);
+        ventanaInicio.SetActive(true);       
     }
 
 //***CRUD_Pregunta
@@ -60,14 +76,19 @@ public class WindowsController : MonoBehaviour
         ventanaInicio.SetActive(true);
         ventanaCRUD_Pregunta.SetActive(false);
     }
-//***Botton Pregunda
+//***Botton Pregunda_Estudiante
     public void MostrarBtPregunta (){
         bt_Preguntas.SetActive(true);
         bt_PreguntasText.SetActive(true);
+        bt_REstudiante.SetActive(true);
+        bt_REstudianteText.SetActive(true);
+
     }
     public void OcultarBtPregunta (){
         bt_Preguntas.SetActive(false);
         bt_PreguntasText.SetActive(false);
+        bt_REstudiante.SetActive(false);
+        bt_REstudianteText.SetActive(false);
     }
 //***PREGUTAS Registrar
     public void MostrarVenRegistrarPregunta(){

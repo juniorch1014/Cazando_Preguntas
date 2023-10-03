@@ -28,4 +28,13 @@ public class EstudianteData
         this.Id_Docente    = id_Docente;   
         nextId++;
     }
+    public EstudianteData(int idEstudiante, string nombre, string apellido, string email, string contraseña, int id_Docente){
+        
+        this.id_Estudiante = idEstudiante;
+        this.Nombre        = nombre;
+        this.Apellido      = apellido;
+        this.Email         = email;
+        this.Contraseña    = contraseña;
+        this.Id_Docente    = id_Docente;   
+    }
 }

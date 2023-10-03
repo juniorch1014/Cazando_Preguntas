@@ -29,7 +29,7 @@ public class DocenteController : MonoBehaviour
         listaDocentes     = docenteRepository.LoadingDataDocente();
         MostrarListaEnLog();
         // Agrega un listener para el evento de cambio en el Dropdown
-        DropdUsuario.onValueChanged.AddListener(OnDropdownValueChanged);
+       // DropdUsuario.onValueChanged.AddListener(OnDropdownValueChanged);
     }
 
     // Update is called once per frame
@@ -64,15 +64,15 @@ public class DocenteController : MonoBehaviour
         inputFContraseña.text   = "";
     }
 
-    private void OnDropdownValueChanged(int value)
-    {
-        // Cuando cambia la selección en el Dropdown, esta función se llama automáticamente
-        // Puedes obtener el valor seleccionado usando la propiedad value
-        selectedValue = DropdUsuario.options[value].text;
+    // private void OnDropdownValueChanged(int value)
+    // {
+    //     // Cuando cambia la selección en el Dropdown, esta función se llama automáticamente
+    //     // Puedes obtener el valor seleccionado usando la propiedad value
+    //     selectedValue = DropdUsuario.options[value].text;
 
-        // Haz lo que desees con el valor seleccionado
-        Debug.Log("Valor seleccionado: " + selectedValue);
-    }
+    //     // Haz lo que desees con el valor seleccionado
+    //     Debug.Log("Valor seleccionado: " + selectedValue);
+    // }
     public void MostrarListaEnLog()
     {
         foreach (var docente in listaDocentes)
