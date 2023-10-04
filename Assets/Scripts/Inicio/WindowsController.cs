@@ -13,6 +13,8 @@ public class WindowsController : MonoBehaviour
     public GameObject ventanaActualizar_Pregunta;
     public GameObject ventanaRegistrar_DocEst;
     public GameObject ventanaRegistrar_Estudiante;
+    public GameObject ventanaCRUD_Estudiante;
+
     public GameObject bt_Preguntas;
     public GameObject bt_PreguntasText;
     public GameObject bt_REstudiante;
@@ -75,6 +77,15 @@ public class WindowsController : MonoBehaviour
     public void OcultarVCRUD_Pregunta (){
         ventanaInicio.SetActive(true);
         ventanaCRUD_Pregunta.SetActive(false);
+    }
+//***CRUD_Estudiante
+    public void MostrarVCRUD_Estudiante (){
+        ventanaInicio.SetActive(false);
+        ventanaCRUD_Estudiante.SetActive(true);
+    }
+    public void OcultarVCRUD_Estudiante (){
+        ventanaInicio.SetActive(true);
+        ventanaCRUD_Estudiante.SetActive(false);
     }
 //***Botton Pregunda_Estudiante
     public void MostrarBtPregunta (){

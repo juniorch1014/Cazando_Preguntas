@@ -8,9 +8,11 @@ public class IniciarSesionController : MonoBehaviour
 {   
     List<DocenteData> listaDocentes = new List<DocenteData>();
     List<EstudianteData> listaEstudiantes = new List<EstudianteData>();
+   
+
     public LoginData loginData;
     public DocenteRepository docenteRepository;
-     public EstudianteRepository estudianteRepository;
+    public EstudianteRepository estudianteRepository;
     public WindowsController wc;
     public TMP_InputField InputF_ID;
     public TMP_InputField InputF_Pass;
@@ -20,7 +22,6 @@ public class IniciarSesionController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         
     }
 
@@ -50,7 +51,6 @@ public class IniciarSesionController : MonoBehaviour
             }
             
         }
-
         
         InputF_ID.text   = "";
         InputF_Pass.text = "";

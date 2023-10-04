@@ -16,6 +16,7 @@ public class EstudianteController : MonoBehaviour
         public DocenteRepository docenteRepository;
         public EstudianteRepository estudianteRepository;
         WindowsController windowsController;
+        //Registrar Estudiante
         public TMP_Dropdown DropdUsuario; 
         public TMP_InputField inputFNombre;
         public TMP_InputField inputFApellido;   
@@ -25,6 +26,11 @@ public class EstudianteController : MonoBehaviour
         int idEstudiante = 0;
         
         string selectedValue = "Estudiante";
+
+        //Mostrar Estudiante
+        public TMP_Text scrollVTMostrarEstudiantes;
+        
+
         // Start is called before the first frame update
         void Start()
         {
@@ -54,6 +60,16 @@ public class EstudianteController : MonoBehaviour
                         windowsController.OcultarVenRegistrarEst();
                 }
               }
+        }
+        public void MostrarEstudiantes() {
+                List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
+                string accumulatedText = "";
+                foreach (var estudiante in listE){
+                    if(estudiante.Id_Docente == idLoginUser){
+                        accumulatedText += $"ID: {estudiante.id_Estudiante}, Nombre: {estudiante.Nombre}, Apellido: {estudiante.Apellido}\n";
+                    }    
+                }
+                scrollVTMostrarEstudiantes.text = accumulatedText;
         }
         public void vaciarEspacios(){
                 inputFNombre.text       = "";
