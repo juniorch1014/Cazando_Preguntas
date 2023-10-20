@@ -11,7 +11,9 @@ public class DocenteController : MonoBehaviour
 
     public DocenteRepository docenteRepository;
     WindowsController windowsController;
-    public TMP_Dropdown DropdUsuario; 
+    public TMP_Dropdown DropdUsuario;
+    public TMP_Text txNotificacionError;
+    public TMP_Text txNotifiID; 
     public TMP_InputField inputFNombre;
     public TMP_InputField inputFApellido;
     public TMP_InputField inputFCodigo;
@@ -35,29 +37,38 @@ public class DocenteController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        foreach (var docente in listaDocentes) {
+            if(inputFNombre.text == docente.Nombre && inputFApellido.text == docente.Apellido){
+                txNotificacionError.text = "Docente ya Registrado";
+            }
+            
+            if (inputFCodigo.text == docente.Email){
+                txNotifiID.text = inputFCodigo.text + " : ya esta regitrado";
+            }
+        }
+
     }
     
     public void Registrar_DocEst() {
         if (selectedValue == "Docente") {
             if (inputFNombre.text == "" || inputFApellido.text == "" || inputFCodigo.text == "" || inputFContraseña.text == "") {
-                Debug.Log("Llenar espacios en blanco");
+                txNotificacionError.text = "Llenar espacios en blanco";
             }else {
                 idDocente = listaDocentes.Count;
-                DocenteData docenteData = new DocenteData(idDocente,inputFNombre.text, inputFApellido.text, inputFCodigo.text, inputFContraseña.text);
-                listaDocentes.Add(docenteData);
-                docenteRepository.SaveDataDocente(listaDocentes);
-                MostrarListaEnLog();
-                vaciarEspacios();
-                windowsController.OcultarVenRegistrarDoc();
+                    DocenteData docenteData = new DocenteData(idDocente,inputFNombre.text, inputFApellido.text, inputFCodigo.text, inputFContraseña.text);
+                    listaDocentes.Add(docenteData);
+                    docenteRepository.SaveDataDocente(listaDocentes);
+                    MostrarListaEnLog();
+                    vaciarEspacios();
+                    windowsController.OcultarVenRegistrarDoc();    
+                }
+                
             }
-        }
-
-        if (selectedValue == "Alumno") {
-            
-        }
     }
+    
     public void vaciarEspacios(){
+        txNotifiID.text         = "";
+        txNotificacionError.text= "";
         inputFNombre.text       = "";
         inputFApellido.text     = "";
         inputFCodigo.text       = "";

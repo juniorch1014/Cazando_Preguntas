@@ -14,6 +14,7 @@ public class IniciarSesionController : MonoBehaviour
     public DocenteRepository docenteRepository;
     public EstudianteRepository estudianteRepository;
     public WindowsController wc;
+    public TMP_Text txNotificacionError;
     public TMP_InputField InputF_ID;
     public TMP_InputField InputF_Pass;
     public TMP_Text txMostrarUsuario;
@@ -32,28 +33,37 @@ public class IniciarSesionController : MonoBehaviour
     }
     public void IniciarSesionDocente() {
         listaDocentes   = docenteRepository.LoadingDataDocente();
-        foreach (var docente in listaDocentes) {
-            MostrarListaDocentes(docente);
-            if (InputF_ID.text == docente.Email && InputF_Pass.text == docente.Contraseña) {
-                IniciarDocente();
-                loginData = new LoginData(docente.id_Docente,"Docente");
-                Debug.Log("LoginData: "+ loginData.ObtenerLoginID() + "-- Tipo: " + loginData.ObtenerLoginTipo());
+
+        if(InputF_ID.text != "" && InputF_Pass.text != ""){
+            foreach (var docente in listaDocentes) {
+                MostrarListaDocentes(docente);
+                if (InputF_ID.text == docente.Email && InputF_Pass.text == docente.Contraseña) {
+                    IniciarDocente();
+                    loginData = new LoginData(docente.id_Docente,"Docente");
+                    Debug.Log("LoginData: "+ loginData.ObtenerLoginID() + "-- Tipo: " + loginData.ObtenerLoginTipo());
+                    Limpiar();
+                }else{
+                    txNotificacionError.text = "ID o Contrasela Erroneas";
+                }
+                
             }
-            
-        }
-        listaEstudiantes   = estudianteRepository.LoadingDataEstudiante();
-        foreach (var estudiante in listaEstudiantes) {
-            MostrarListaEstudiante(estudiante);
-            if (InputF_ID.text == estudiante.Email && InputF_Pass.text == estudiante.Contraseña) {
-                IniciarAlumno();
-                loginData = new LoginData(estudiante.id_Estudiante,"Estudiante");
-                Debug.Log("LoginData: "+ loginData.ObtenerLoginID() + "-- Tipo: " + loginData.ObtenerLoginTipo());
+            listaEstudiantes   = estudianteRepository.LoadingDataEstudiante();
+            foreach (var estudiante in listaEstudiantes) {
+                MostrarListaEstudiante(estudiante);
+                if (InputF_ID.text == estudiante.Email && InputF_Pass.text == estudiante.Contraseña) {
+                    IniciarAlumno();
+                    loginData = new LoginData(estudiante.id_Estudiante,"Estudiante");
+                    Debug.Log("LoginData: "+ loginData.ObtenerLoginID() + "-- Tipo: " + loginData.ObtenerLoginTipo());
+                    Limpiar();
+                }else{
+                    txNotificacionError.text = "ID o Contrasela Erroneas";
+                }
+                
             }
-            
+        } else{
+             txNotificacionError.text = "Llenar los espacios en Blanco";
         }
         
-        InputF_ID.text   = "";
-        InputF_Pass.text = "";
        
     }
     public void Mostrarusuario (){
@@ -79,6 +89,12 @@ public class IniciarSesionController : MonoBehaviour
                  }
             }
         }
+    }
+
+    public void Limpiar(){
+        txNotificacionError.text = "";
+        InputF_ID.text   = "";
+        InputF_Pass.text = "";
     }
     public void IniciarDocente (){
         wc.MostrarVentanaInicio();
