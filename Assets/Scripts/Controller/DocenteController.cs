@@ -22,6 +22,8 @@ public class DocenteController : MonoBehaviour
     int idDocente = 0;
     
     string selectedValue = "Docente";
+    bool docenteYaRegistrado = false; // Variable para seguir el estado de la notificación
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,17 +38,27 @@ public class DocenteController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {      
+        docenteYaRegistrado = false; // Restablece la notificación en cada actualización
+
         foreach (var docente in listaDocentes) {
-            if(inputFNombre.text == docente.Nombre && inputFApellido.text == docente.Apellido){
-                txNotificacionError.text = "Docente ya Registrado";
+            if (inputFNombre.text == docente.Nombre && inputFApellido.text == docente.Apellido)
+            {
+                docenteYaRegistrado = true;
+                txNotificacionError.text = "Docente ya Registrado";    
             }
-            
-            if (inputFCodigo.text == docente.Email){
-                txNotifiID.text = inputFCodigo.text + " : ya esta regitrado";
-            }
+            if (inputFCodigo.text == docente.Email) 
+            {
+                docenteYaRegistrado = true;
+                txNotifiID.text = inputFCodigo.text + " : ya esta registrado";
+            }                
         }
 
+        // Borra la notificación si no se cumplen las condiciones
+        if (!docenteYaRegistrado) {
+            txNotificacionError.text = ""; // Borra la notificación de error
+            txNotifiID.text = ""; // Borra la notificación de ID
+        }
     }
     
     public void Registrar_DocEst() {
@@ -61,11 +73,17 @@ public class DocenteController : MonoBehaviour
                     MostrarListaEnLog();
                     vaciarEspacios();
                     windowsController.OcultarVenRegistrarDoc();    
-                }
-                
             }
+                
+        }
     }
     
+    public void Mayus(TMP_InputField inputFAMayus){
+        inputFAMayus.text = inputFAMayus.text.ToUpper();
+    }
+    public void Minus(TMP_InputField inputFAMinus){
+        inputFAMinus.text = inputFAMinus.text.ToLower();
+    }
     public void vaciarEspacios(){
         txNotifiID.text         = "";
         txNotificacionError.text= "";
@@ -88,7 +106,7 @@ public class DocenteController : MonoBehaviour
     {
         foreach (var docente in listaDocentes)
         {
-            Debug.Log($"ID: {docente.id_Docente}, Nombre: {docente.Nombre}, Apellido: {docente.Apellido}, User: {docente.Email}, Pass: {docente.Contraseña}");
+            Debug.Log($"Docente_Registrar - ID: {docente.Id_Docente}, Nombre: {docente.Nombre}, Apellido: {docente.Apellido}, User: {docente.Email}, Pass: {docente.Contraseña}");
 
         }
     }

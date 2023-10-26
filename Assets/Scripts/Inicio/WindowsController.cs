@@ -14,6 +14,11 @@ public class WindowsController : MonoBehaviour
     public GameObject ventanaRegistrar_DocEst;
     public GameObject ventanaRegistrar_Estudiante;
     public GameObject ventanaCRUD_Estudiante;
+    public GameObject ventanaUREditar_Estudiante;
+    public GameObject ventanaMostrar_Estudiante;
+    public GameObject ventanaActualizar_Estudiante;
+    public GameObject ventanaUREditar_Pregunta;
+
 
     public GameObject bt_Preguntas;
     public GameObject bt_PreguntasText;
@@ -62,11 +67,37 @@ public class WindowsController : MonoBehaviour
 //***Estudiante_Registrar
     public void MostrarVenRegistrarEst (){
         ventanaRegistrar_Estudiante.SetActive(true);
-        ventanaInicio.SetActive(false);
+        ventanaCRUD_Estudiante.SetActive(false);
     }
     public void OcultarVenRegistrarEst (){
         ventanaRegistrar_Estudiante.SetActive(false);
-        ventanaInicio.SetActive(true);       
+        ventanaCRUD_Estudiante.SetActive(true);       
+    }
+
+    public void MostrarVenActualizarEstudiante(){
+        ventanaActualizar_Estudiante.SetActive(true);
+        ventanaCRUD_Estudiante.SetActive(false);
+    }
+    public void OcultarVenActualizarEstudiante(){
+        ventanaActualizar_Estudiante.SetActive(false);
+        ventanaCRUD_Estudiante.SetActive(true);
+
+    }
+    public void MostrarVenMostrarEstudiante(){
+        ventanaMostrar_Estudiante.SetActive(true);
+        ventanaCRUD_Estudiante.SetActive(false);
+    }
+    public void OcultarVenMostrarEstudiante(){
+        ventanaMostrar_Estudiante.SetActive(false);
+        ventanaCRUD_Estudiante.SetActive(true);
+
+    }
+
+    public void MostrarVentanaEditarEstudiante(){
+        ventanaUREditar_Estudiante.SetActive(true);
+    }
+    public void OcultarVentanaEditarEstudiante(){
+        ventanaUREditar_Estudiante.SetActive(false);
     }
 
 //***CRUD_Pregunta
@@ -111,6 +142,12 @@ public class WindowsController : MonoBehaviour
         ventanaCRUD_Pregunta.SetActive(true);
     }
 //***PREGUNTAS Actualizar
+    public void MostrarVentanaUREditPregunta () {
+        ventanaUREditar_Pregunta.SetActive(true);
+    }
+    public void OcultarVentanaUREditPregunta () {
+        ventanaUREditar_Pregunta.SetActive(false);
+    }
     public void MostrarVenActualizarPregunta(){
         ventanaActualizar_Pregunta.SetActive(true);
         ventanaCRUD_Pregunta.SetActive(false);
