@@ -1,0 +1,9 @@
+{
+    "name": "ControllerDocenteTests",
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}

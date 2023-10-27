@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1521.6
     height: 758.4
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 95
+  controlID: 92
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,12 +139,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1188.8
+    width: 1192.8
     height: 708.4
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 39
+  controlID: 40
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,12 +164,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1188.8
+    width: 1192.8
     height: 533.6
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 40
+  controlID: 41
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -213,7 +213,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 250.4
     y: 0
-    width: 938.4
+    width: 942.4
     height: 533.6
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -241,7 +241,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 533.6
-    width: 1188.8
+    width: 1192.8
     height: 174.80005
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
@@ -261,24 +261,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1188.8
+    x: 1192.8
     y: 0
-    width: 332.79993
+    width: 328.79993
     height: 708.4
-  m_MinSize: {x: 276, y: 71}
+  m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 19}
   - {fileID: 20}
   - {fileID: 12}
-  m_Selected: 0
-  m_LastSelected: 2
+  m_Selected: 2
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -299,9 +299,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1196
+    x: 1200
     y: 80.8
-    width: 331.79993
+    width: 327.79993
     height: 687.4
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 814
+    ID: 127
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -339,44 +339,9 @@ MonoBehaviour:
     oldSplitSize: 0
   m_TestTypeToolbarIndex: 1
   m_PlayModeTestListGUI:
-    m_Window: {fileID: 0}
-    m_NewResultList: []
-    m_ResultText: 
-    m_ResultStacktrace: 
-    m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 
-      m_RenameOverlay:
-        m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
-        m_EditFieldRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        m_UserData: 0
-        m_IsWaitingForDelay: 0
-        m_IsRenaming: 0
-        m_OriginalEventType: 11
-        m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 0}
-      m_SearchString: 
-    m_TestRunnerUIFilter:
-      PassedHidden: 0
-      FailedHidden: 0
-      NotRunHidden: 0
-      m_SearchString: 
-      selectedCategoryMask: 0
-      availableCategories: []
-    m_SelectedOption: 0
-  m_EditModeTestListGUI:
     m_Window: {fileID: 12}
     m_NewResultList:
-    - id: 1000
+    - id: 1008
       uniqueId: '[puzzle_imple][suite]'
       name: puzzle_imple
       fullName: puzzle_imple
@@ -392,74 +357,6 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1004
-      uniqueId: '[EditModeTests][C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3. PUZZLE/1.
-        Repositorio_TesisSthep/v1.0.7.5/Library/ScriptAssemblies/EditModeTests.dll][suite]'
-      name: EditModeTests.dll
-      fullName: C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3. PUZZLE/1. Repositorio_TesisSthep/v1.0.7.5/Library/ScriptAssemblies/EditModeTests.dll
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1000
-      parentUniqueId: '[puzzle_imple][suite]'
-    - id: 1001
-      uniqueId: EditModeTests.dll/[EditModeTests][EstudianteControllerTests][suite]
-      name: EstudianteControllerTests
-      fullName: EstudianteControllerTests
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1004
-      parentUniqueId: '[EditModeTests][C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3.
-        PUZZLE/1. Repositorio_TesisSthep/v1.0.7.5/Library/ScriptAssemblies/EditModeTests.dll][suite]'
-    - id: 1002
-      uniqueId: EditModeTests.dll/EstudianteControllerTests/[EditModeTests][EstudianteControllerTests.EstudianteControllerTestsSimplePasses]
-      name: EstudianteControllerTestsSimplePasses
-      fullName: EstudianteControllerTests.EstudianteControllerTestsSimplePasses
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditModeTests.dll/[EditModeTests][EstudianteControllerTests][suite]
-    - id: 1003
-      uniqueId: EditModeTests.dll/EstudianteControllerTests/[EditModeTests][EstudianteControllerTests.EstudianteControllerTestsWithEnumeratorPasses]
-      name: EstudianteControllerTestsWithEnumeratorPasses
-      fullName: EstudianteControllerTests.EstudianteControllerTestsWithEnumeratorPasses
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditModeTests.dll/[EditModeTests][EstudianteControllerTests][suite]
     m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
@@ -492,6 +389,347 @@ MonoBehaviour:
       selectedCategoryMask: 0
       availableCategories:
       - Uncategorized
+    m_SelectedOption: 0
+  m_EditModeTestListGUI:
+    m_Window: {fileID: 12}
+    m_NewResultList:
+    - id: 1000
+      uniqueId: '[puzzle_imple][suite]'
+      name: puzzle_imple
+      fullName: puzzle_imple
+      resultStatus: 1
+      duration: 0.07016
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1006
+      uniqueId: '[ControllerDocenteTests][C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3.
+        PUZZLE/1. Repositorio_TesisSthep/puzzle_imple/Library/ScriptAssemblies/ControllerDocenteTests.dll][suite]'
+      name: ControllerDocenteTests.dll
+      fullName: C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3. PUZZLE/1. Repositorio_TesisSthep/puzzle_imple/Library/ScriptAssemblies/ControllerDocenteTests.dll
+      resultStatus: 1
+      duration: 0.0196029
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[puzzle_imple][suite]'
+    - id: 1001
+      uniqueId: ControllerDocenteTests.dll/[ControllerDocenteTests][TestDocenteController][suite]
+      name: TestDocenteController
+      fullName: TestDocenteController
+      resultStatus: 1
+      duration: 0.0178002
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1004
+      parentUniqueId: '[ControllerDocenteTests][C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3.
+        PUZZLE/1. Repositorio_TesisSthep/v1.0.9/Library/ScriptAssemblies/ControllerDocenteTests.dll][suite]'
+    - id: 1003
+      uniqueId: ControllerDocenteTests.dll/TestDocenteController/[ControllerDocenteTests][TestDocenteController.TestBuscarDocente]
+      name: TestBuscarDocente
+      fullName: TestDocenteController.TestBuscarDocente
+      resultStatus: 1
+      duration: 0.00523
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: ControllerDocenteTests.dll/[ControllerDocenteTests][TestDocenteController][suite]
+    - id: 1004
+      uniqueId: ControllerDocenteTests.dll/TestDocenteController/[ControllerDocenteTests][TestDocenteController.TestMayusConversion]
+      name: TestMayusConversion
+      fullName: TestDocenteController.TestMayusConversion
+      resultStatus: 1
+      duration: 0.0002137
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: ControllerDocenteTests.dll/[ControllerDocenteTests][TestDocenteController][suite]
+    - id: 1005
+      uniqueId: ControllerDocenteTests.dll/TestDocenteController/[ControllerDocenteTests][TestDocenteController.TestMinusConversion]
+      name: TestMinusConversion
+      fullName: TestDocenteController.TestMinusConversion
+      resultStatus: 1
+      duration: 0.0001067
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: ControllerDocenteTests.dll/[ControllerDocenteTests][TestDocenteController][suite]
+    - id: 1002
+      uniqueId: ControllerDocenteTests.dll/TestDocenteController/[ControllerDocenteTests][TestDocenteController.TestRegistrarDocente]
+      name: TestRegistrarDocente
+      fullName: TestDocenteController.TestRegistrarDocente
+      resultStatus: 1
+      duration: 0.0000734
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: ControllerDocenteTests.dll/[ControllerDocenteTests][TestDocenteController][suite]
+    - id: 1011
+      uniqueId: '[ControllerEstudianteTests][C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3.
+        PUZZLE/1. Repositorio_TesisSthep/puzzle_imple/Library/ScriptAssemblies/ControllerEstudianteTests.dll][suite]'
+      name: ControllerEstudianteTests.dll
+      fullName: C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3. PUZZLE/1. Repositorio_TesisSthep/puzzle_imple/Library/ScriptAssemblies/ControllerEstudianteTests.dll
+      resultStatus: 1
+      duration: 0.0061601
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[puzzle_imple][suite]'
+    - id: 1001
+      uniqueId: ControllerEstudianteTests.dll/[ControllerEstudianteTests][TestEstudianteController][suite]
+      name: TestEstudianteController
+      fullName: TestEstudianteController
+      resultStatus: 1
+      duration: 0.0017533
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1004
+      parentUniqueId: '[ControllerEstudianteTests][C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3.
+        PUZZLE/1. Repositorio_TesisSthep/v1.0.9/Library/ScriptAssemblies/ControllerEstudianteTests.dll][suite]'
+    - id: 1007
+      uniqueId: ControllerEstudianteTests.dll/TestEstudianteController/[ControllerEstudianteTests][TestEstudianteController.TestBuscarEstudiante]
+      name: TestBuscarEstudiante
+      fullName: TestEstudianteController.TestBuscarEstudiante
+      resultStatus: 1
+      duration: 0.0003993
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: ControllerEstudianteTests.dll/[ControllerEstudianteTests][TestEstudianteController][suite]
+    - id: 1008
+      uniqueId: ControllerEstudianteTests.dll/TestEstudianteController/[ControllerEstudianteTests][TestEstudianteController.TestEditarEstudiante]
+      name: TestEditarEstudiante
+      fullName: TestEstudianteController.TestEditarEstudiante
+      resultStatus: 1
+      duration: 0.0001147
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: ControllerEstudianteTests.dll/[ControllerEstudianteTests][TestEstudianteController][suite]
+    - id: 1006
+      uniqueId: ControllerEstudianteTests.dll/TestEstudianteController/[ControllerEstudianteTests][TestEstudianteController.TestRegistrarEstudiante]
+      name: TestRegistrarEstudiante
+      fullName: TestEstudianteController.TestRegistrarEstudiante
+      resultStatus: 1
+      duration: 0.0000826
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: ControllerEstudianteTests.dll/[ControllerEstudianteTests][TestEstudianteController][suite]
+    - id: 1017
+      uniqueId: '[ControllerPreguntaTest][C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3.
+        PUZZLE/1. Repositorio_TesisSthep/puzzle_imple/Library/ScriptAssemblies/ControllerPreguntaTest.dll][suite]'
+      name: ControllerPreguntaTest.dll
+      fullName: C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3. PUZZLE/1. Repositorio_TesisSthep/puzzle_imple/Library/ScriptAssemblies/ControllerPreguntaTest.dll
+      resultStatus: 1
+      duration: 0.0056464
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[puzzle_imple][suite]'
+    - id: 1009
+      uniqueId: ControllerPreguntaTest.dll/[ControllerPreguntaTest][TestPreguntaController][suite]
+      name: TestPreguntaController
+      fullName: TestPreguntaController
+      resultStatus: 1
+      duration: 0.0018759
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: '[ControllerPreguntaTest][C:/Users/quesh/OneDrive/Escritorio/UPN-2023/3.
+        PUZZLE/1. Repositorio_TesisSthep/v1.0.9/Library/ScriptAssemblies/ControllerPreguntaTest.dll][suite]'
+    - id: 1014
+      uniqueId: ControllerPreguntaTest.dll/TestPreguntaController/[ControllerPreguntaTest][TestPreguntaController.TestEditarPregunta]
+      name: TestEditarPregunta
+      fullName: TestPreguntaController.TestEditarPregunta
+      resultStatus: 1
+      duration: 0.0001871
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: ControllerPreguntaTest.dll/[ControllerPreguntaTest][TestPreguntaController][suite]
+    - id: 1015
+      uniqueId: ControllerPreguntaTest.dll/TestPreguntaController/[ControllerPreguntaTest][TestPreguntaController.TestEliminarPregunta]
+      name: TestEliminarPregunta
+      fullName: TestPreguntaController.TestEliminarPregunta
+      resultStatus: 1
+      duration: 0.0001009
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: ControllerPreguntaTest.dll/[ControllerPreguntaTest][TestPreguntaController][suite]
+    - id: 1016
+      uniqueId: ControllerPreguntaTest.dll/TestPreguntaController/[ControllerPreguntaTest][TestPreguntaController.TestLlenarDatosEditar]
+      name: TestLlenarDatosEditar
+      fullName: TestPreguntaController.TestLlenarDatosEditar
+      resultStatus: 1
+      duration: 0.0000828
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: ControllerPreguntaTest.dll/[ControllerPreguntaTest][TestPreguntaController][suite]
+    - id: 1013
+      uniqueId: ControllerPreguntaTest.dll/TestPreguntaController/[ControllerPreguntaTest][TestPreguntaController.TestRegistrarPregunta]
+      name: TestRegistrarPregunta
+      fullName: TestPreguntaController.TestRegistrarPregunta
+      resultStatus: 1
+      duration: 0.0000826
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: ControllerPreguntaTest.dll/[ControllerPreguntaTest][TestPreguntaController][suite]
+    m_ResultText: ControllerPreguntaTest.dll (0.006s)
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 3ea3761b
+      m_LastClickedID: 460759870
+      m_ExpandedIDs: b36afeb6a19002b91ef19cbf9e172f1069f723112aa8fc153ea3761bc250ff2bfcbfca3e98f13251424e345304325f7cffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: -1
+      availableCategories:
+      - Uncategorized
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -515,7 +753,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 7.2000003
     y: 614.4
-    width: 1187.8
+    width: 1191.8
     height: 153.80005
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -538,7 +776,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes/Inicio
+    - Assets/UI Toolkit
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -546,16 +784,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes/Inicio
+  - Assets/UI Toolkit
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\quesh\OneDrive\Escritorio\UPN-2023\3. PUZZLE\1. Repositorio_TesisSthep\puzzle_imple
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: de420000
-    m_LastClickedID: 17118
-    m_ExpandedIDs: 00000000ca400000e641000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 047b0000
+    m_LastClickedID: 31492
+    m_ExpandedIDs: 000000004679000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -571,7 +809,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 10}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -583,7 +821,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 
+    m_ExpandedIDs: 0000000046790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -610,7 +848,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000c86d0000f46c0000f86c0000026d00002a9f00000000000024680000266800006c2803008a680000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -677,9 +915,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 88cc0000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 5a7cfeffd87dfeff
+      m_ExpandedIDs: 8ae0ffff2eedffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -726,7 +964,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 257.6
     y: 80.8
-    width: 936.4
+    width: 940.4
     height: 512.6
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1086,9 +1324,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -18.675629, y: -1.0175514, z: -0.29767925}
+    m_Target: {x: -22.300594, y: 2.2525947, z: -0.39075047}
     speed: 2
-    m_Value: {x: -18.675629, y: -1.0175514, z: -0.29767925}
+    m_Value: {x: -22.300594, y: 2.2525947, z: -0.39075047}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1138,9 +1376,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 14.740653
+    m_Target: 23.921917
     speed: 2
-    m_Value: 14.740653
+    m_Value: 23.921917
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1324,9 +1562,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 7.2000003
-    y: 616
-    width: 1187.8
-    height: 153.79999
+    y: 614.4
+    width: 1191.8
+    height: 153.80005
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1358,9 +1596,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1196
+    x: 1200
     y: 80.8
-    width: 331.79993
+    width: 327.79993
     height: 687.4
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1378,7 +1616,7 @@ MonoBehaviour:
     m_CachedPref: -160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 32590
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -1405,10 +1643,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1212.8
-    y: 73.6
-    width: 322.19995
-    height: 701.8
+    x: 1200
+    y: 80.8
+    width: 327.79993
+    height: 687.4
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0

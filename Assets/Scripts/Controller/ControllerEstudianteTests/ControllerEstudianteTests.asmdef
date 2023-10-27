@@ -1,0 +1,9 @@
+{
+    "name": "ControllerEstudianteTests",
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}

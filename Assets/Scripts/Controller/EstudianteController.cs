@@ -5,272 +5,302 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 
-
-public class EstudianteController : MonoBehaviour
-{       
-
-    public IniciarSesionController iniciarSesionController;     
-    int idLoginUser;
-
-    List<DocenteData> listaDocentes = new List<DocenteData>();
-    List<EstudianteData> listaEstudiantes = new List<EstudianteData>();
-
-    public DocenteRepository docenteRepository;
-    public EstudianteRepository estudianteRepository;
-    WindowsController windowsController;
-    //Registrar Estudiante
-    public TMP_Dropdown DropdUsuario;
-    public TMP_Text txNotificacionError;
-    public TMP_Text txNotifiID;
-    public TMP_InputField inputFGrado;
-    public TMP_InputField inputFSeccion; 
-    public TMP_InputField inputFNombre;
-    public TMP_InputField inputFApellido;   
-    public TMP_InputField inputFCodigo;
-    public TMP_InputField inputFContraseña;
-    //Editar Estudiante
-    public TMP_InputField InputF_IDEditarE;
-    public TMP_Dropdown DropdEditUsuario;
-    public TMP_Text txEditNotificacionError;
-    public TMP_Text txEditNotifiID;
-    public TMP_Text txEditNotifiUREdit;
-    public TMP_InputField inputFEditGrado;
-    public TMP_InputField inputFEditSeccion; 
-    public TMP_InputField inputFEditNombre;
-    public TMP_InputField inputFEditApellido;   
-    public TMP_InputField inputFEditCodigo;
-    public TMP_InputField inputFEditContraseña;
-
-
-    public TMP_InputField inputFBuscar;
-    public TMP_InputField inputFEditar;
-    
-    int idEstudiante = 0;
-    
-    string selectedValue = "Estudiante";
-
-    //Mostrar Estudiante
-    public TMP_Text ContID;
-    public TMP_Text ContGrado;
-    public TMP_Text ContSeccion;
-    public TMP_Text ContNombre;
-    public TMP_Text ContApellido;
-    public TMP_Text ContUsuario;
-    public TMP_Text ContContraseña;
-    bool estudianteYaRegistrado = false; // Variable para seguir el estado de la notificación
-    
-
-    // Start is called before the first frame update
-    void Start()
+namespace Controller {
+    public class EstudianteController : MonoBehaviour
     {
-        windowsController = GetComponent<WindowsController>();
-        listaDocentes     = docenteRepository.LoadingDataDocente();
-        listaEstudiantes  = estudianteRepository.LoadingDataEstudiante();
-        MostrarListaEnLog();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {      
-        estudianteYaRegistrado = false; // Restablece la notificación en cada actualización
+        public IniciarSesionController iniciarSesionController;
+        int idLoginUser;
 
-        foreach (var estudiante in listaEstudiantes) {
-            if (inputFNombre.text == estudiante.Nombre && inputFApellido.text == estudiante.Apellido)
+        List<DocenteData> listaDocentes = new List<DocenteData>();
+        List<EstudianteData> listaEstudiantes = new List<EstudianteData>();
+
+        public DocenteRepository docenteRepository;
+        public EstudianteRepository estudianteRepository;
+        WindowsController windowsController;
+        //Registrar Estudiante
+        public TMP_Dropdown DropdUsuario;
+        public TMP_Text txNotificacionError;
+        public TMP_Text txNotifiID;
+        public TMP_InputField inputFGrado;
+        public TMP_InputField inputFSeccion;
+        public TMP_InputField inputFNombre;
+        public TMP_InputField inputFApellido;
+        public TMP_InputField inputFCodigo;
+        public TMP_InputField inputFContraseña;
+        //Editar Estudiante
+        public TMP_InputField InputF_IDEditarE;
+        public TMP_Dropdown DropdEditUsuario;
+        public TMP_Text txEditNotificacionError;
+        public TMP_Text txEditNotifiID;
+        public TMP_Text txEditNotifiUREdit;
+        public TMP_InputField inputFEditGrado;
+        public TMP_InputField inputFEditSeccion;
+        public TMP_InputField inputFEditNombre;
+        public TMP_InputField inputFEditApellido;
+        public TMP_InputField inputFEditCodigo;
+        public TMP_InputField inputFEditContraseña;
+
+
+        public TMP_InputField inputFBuscar;
+        public TMP_InputField inputFEditar;
+
+        int idEstudiante = 0;
+
+        string selectedValue = "Estudiante";
+
+        //Mostrar Estudiante
+        public TMP_Text ContID;
+        public TMP_Text ContGrado;
+        public TMP_Text ContSeccion;
+        public TMP_Text ContNombre;
+        public TMP_Text ContApellido;
+        public TMP_Text ContUsuario;
+        public TMP_Text ContContraseña;
+        bool estudianteYaRegistrado = false; // Variable para seguir el estado de la notificación
+
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            windowsController = GetComponent<WindowsController>();
+            listaDocentes = docenteRepository.LoadingDataDocente();
+            listaEstudiantes = estudianteRepository.LoadingDataEstudiante();
+            MostrarListaEnLog();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            estudianteYaRegistrado = false; // Restablece la notificación en cada actualización
+
+            foreach (var estudiante in listaEstudiantes)
             {
-                estudianteYaRegistrado = true;
-                txNotificacionError.text = "Estudiante ya Registrado";    
+                if (inputFNombre.text == estudiante.Nombre && inputFApellido.text == estudiante.Apellido)
+                {
+                    estudianteYaRegistrado = true;
+                    txNotificacionError.text = "Estudiante ya Registrado";
+                }
+                if (inputFCodigo.text == estudiante.Email)
+                {
+                    estudianteYaRegistrado = true;
+                    txNotifiID.text = inputFCodigo.text + " : ya esta registrado";
+                }
             }
-            if (inputFCodigo.text == estudiante.Email) 
+
+            // Borra la notificación si no se cumplen las condiciones
+            if (!estudianteYaRegistrado)
             {
-                estudianteYaRegistrado = true;
-                txNotifiID.text = inputFCodigo.text + " : ya esta registrado";
-            }                
+                txNotificacionError.text = ""; // Borra la notificación de error
+                txNotifiID.text = ""; // Borra la notificación de ID
+            }
         }
 
-        // Borra la notificación si no se cumplen las condiciones
-        if (!estudianteYaRegistrado) {
-            txNotificacionError.text = ""; // Borra la notificación de error
-            txNotifiID.text = ""; // Borra la notificación de ID
-        }
-    }
-    
-    public void Registrar_Est () {
-      
-        if (selectedValue == "Estudiante") {
-            if (inputFNombre.text == "" || inputFApellido.text == "" || inputFCodigo.text == "" || inputFContraseña.text == "") {
-                txNotificacionError.text = "Llenar espacios en blanco";
-            }else if (estudianteYaRegistrado == true){
-                txNotificacionError.text = "Estudiante ya esta Registrado";
-            }else{
+        public void Registrar_Est()
+        {
+
+            if (selectedValue == "Estudiante")
+            {
+                if (inputFNombre.text == "" || inputFApellido.text == "" || inputFCodigo.text == "" || inputFContraseña.text == "")
+                {
+                    txNotificacionError.text = "Llenar espacios en blanco";
+                }
+                else if (estudianteYaRegistrado == true)
+                {
+                    txNotificacionError.text = "Estudiante ya esta Registrado";
+                }
+                else
+                {
                     idEstudiante = listaEstudiantes.Count;
-                    EstudianteData estudianteData = new EstudianteData(idEstudiante,inputFGrado.text, inputFSeccion.text, inputFNombre.text, inputFApellido.text, inputFCodigo.text, inputFContraseña.text, idLoginUser);
+                    EstudianteData estudianteData = new EstudianteData(idEstudiante, inputFGrado.text, inputFSeccion.text, inputFNombre.text, inputFApellido.text, inputFCodigo.text, inputFContraseña.text, idLoginUser);
                     listaEstudiantes.Add(estudianteData);
                     estudianteRepository.SaveDataEstudiante(listaEstudiantes);
                     MostrarListaEnLog();
                     vaciarEspacios();
                     windowsController.OcultarVenRegistrarEst();
+                }
             }
         }
-    }
-    public void MostrarEstudiantes() {
-        List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
-        string accumulatedTextID         = "";
-        string accumulatedTextGrado      = "";
-        string accumulatedTextSeccion    = "";
-        string accumulatedTextNombre     = "";
-        string accumulatedTextApellido   = "";
-        string accumulatedTextUsuario    = "";
-        string accumulatedTextContraseña = "";
+        public void MostrarEstudiantes()
+        {
+            List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
+            string accumulatedTextID = "";
+            string accumulatedTextGrado = "";
+            string accumulatedTextSeccion = "";
+            string accumulatedTextNombre = "";
+            string accumulatedTextApellido = "";
+            string accumulatedTextUsuario = "";
+            string accumulatedTextContraseña = "";
 
-        foreach (var estudiante in listE){
-            if(estudiante.Id_Docente == idLoginUser){
-                accumulatedTextID         += $"{estudiante.id_Estudiante}\n";
-                accumulatedTextGrado      += $"{estudiante.Grado}\n";
-                accumulatedTextSeccion    += $"{estudiante.Seccion}\n";
-                accumulatedTextNombre     += $"{estudiante.Nombre}\n";
-                accumulatedTextApellido   += $"{estudiante.Apellido}\n";
-                accumulatedTextUsuario    += $"{estudiante.Email}\n";
-                accumulatedTextContraseña += $"{estudiante.Contraseña}\n";
-            }    
-        }
-        ContID.text         = accumulatedTextID;
-        ContGrado.text      = accumulatedTextGrado;
-        ContSeccion.text    = accumulatedTextSeccion;
-        ContNombre.text     = accumulatedTextNombre;
-        ContApellido.text   = accumulatedTextApellido;
-        ContUsuario.text    = accumulatedTextUsuario;
-        ContContraseña.text = accumulatedTextContraseña;
-    }
-
-    public void BuscarEstudiante() {
-        List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
-        string accumulatedTextID         = "";
-        string accumulatedTextGrado      = "";
-        string accumulatedTextSeccion    = "";
-        string accumulatedTextNombre     = "";
-        string accumulatedTextApellido   = "";
-        string accumulatedTextUsuario    = "";
-        string accumulatedTextContraseña = "";
-
-        foreach (var estudiante in listE){
-            if(estudiante.Id_Docente == idLoginUser){
-                if (estudiante.id_Estudiante.ToString() == inputFBuscar.text
-                    || estudiante.Nombre     == inputFBuscar.text
-                    || estudiante.Apellido   == inputFBuscar.text
-                    || estudiante.Email      == inputFBuscar.text
-                    || estudiante.Contraseña == inputFBuscar.text)
+            foreach (var estudiante in listE)
+            {
+                if (estudiante.Id_Docente == idLoginUser)
                 {
-                    accumulatedTextID         += $"{estudiante.id_Estudiante}\n";
-                    accumulatedTextGrado      += $"{estudiante.Grado}\n";
-                    accumulatedTextSeccion    += $"{estudiante.Seccion}\n";
-                    accumulatedTextNombre     += $"{estudiante.Nombre}\n";
-                    accumulatedTextApellido   += $"{estudiante.Apellido}\n";
-                    accumulatedTextUsuario    += $"{estudiante.Email}\n";
+                    accumulatedTextID += $"{estudiante.id_Estudiante}\n";
+                    accumulatedTextGrado += $"{estudiante.Grado}\n";
+                    accumulatedTextSeccion += $"{estudiante.Seccion}\n";
+                    accumulatedTextNombre += $"{estudiante.Nombre}\n";
+                    accumulatedTextApellido += $"{estudiante.Apellido}\n";
+                    accumulatedTextUsuario += $"{estudiante.Email}\n";
                     accumulatedTextContraseña += $"{estudiante.Contraseña}\n";
                 }
-                if (inputFBuscar.text == "")
-                {
-                    accumulatedTextID         += $"{estudiante.id_Estudiante}\n";
-                    accumulatedTextGrado      += $"{estudiante.Grado}\n";
-                    accumulatedTextSeccion    += $"{estudiante.Seccion}\n";
-                    accumulatedTextNombre     += $"{estudiante.Nombre}\n";
-                    accumulatedTextApellido   += $"{estudiante.Apellido}\n";
-                    accumulatedTextUsuario    += $"{estudiante.Email}\n";
-                    accumulatedTextContraseña += $"{estudiante.Contraseña}\n";
-                }   
-            }    
+            }
+            ContID.text = accumulatedTextID;
+            ContGrado.text = accumulatedTextGrado;
+            ContSeccion.text = accumulatedTextSeccion;
+            ContNombre.text = accumulatedTextNombre;
+            ContApellido.text = accumulatedTextApellido;
+            ContUsuario.text = accumulatedTextUsuario;
+            ContContraseña.text = accumulatedTextContraseña;
         }
-        ContID.text         = accumulatedTextID;
-        ContGrado.text      = accumulatedTextGrado;
-        ContSeccion.text    = accumulatedTextSeccion;
-        ContNombre.text     = accumulatedTextNombre;
-        ContApellido.text   = accumulatedTextApellido;
-        ContUsuario.text    = accumulatedTextUsuario;
-        ContContraseña.text = accumulatedTextContraseña;
-    }
-    
-    public void EditarEstudiante() {
-        // if (inputFNombre.text == "" || inputFApellido.text == "" || inputFCodigo.text == "" || inputFContraseña.text == "") {
-        //         txEditNotificacionError.text = "Llenar espacios en blanco";
-        // }else{
+
+        public void BuscarEstudiante()
+        {
+            List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
+            string accumulatedTextID = "";
+            string accumulatedTextGrado = "";
+            string accumulatedTextSeccion = "";
+            string accumulatedTextNombre = "";
+            string accumulatedTextApellido = "";
+            string accumulatedTextUsuario = "";
+            string accumulatedTextContraseña = "";
+
+            foreach (var estudiante in listE)
+            {
+                if (estudiante.Id_Docente == idLoginUser)
+                {
+                    if (estudiante.id_Estudiante.ToString() == inputFBuscar.text
+                        || estudiante.Nombre == inputFBuscar.text
+                        || estudiante.Apellido == inputFBuscar.text
+                        || estudiante.Email == inputFBuscar.text
+                        || estudiante.Contraseña == inputFBuscar.text)
+                    {
+                        accumulatedTextID += $"{estudiante.id_Estudiante}\n";
+                        accumulatedTextGrado += $"{estudiante.Grado}\n";
+                        accumulatedTextSeccion += $"{estudiante.Seccion}\n";
+                        accumulatedTextNombre += $"{estudiante.Nombre}\n";
+                        accumulatedTextApellido += $"{estudiante.Apellido}\n";
+                        accumulatedTextUsuario += $"{estudiante.Email}\n";
+                        accumulatedTextContraseña += $"{estudiante.Contraseña}\n";
+                    }
+                    if (inputFBuscar.text == "")
+                    {
+                        accumulatedTextID += $"{estudiante.id_Estudiante}\n";
+                        accumulatedTextGrado += $"{estudiante.Grado}\n";
+                        accumulatedTextSeccion += $"{estudiante.Seccion}\n";
+                        accumulatedTextNombre += $"{estudiante.Nombre}\n";
+                        accumulatedTextApellido += $"{estudiante.Apellido}\n";
+                        accumulatedTextUsuario += $"{estudiante.Email}\n";
+                        accumulatedTextContraseña += $"{estudiante.Contraseña}\n";
+                    }
+                }
+            }
+            ContID.text = accumulatedTextID;
+            ContGrado.text = accumulatedTextGrado;
+            ContSeccion.text = accumulatedTextSeccion;
+            ContNombre.text = accumulatedTextNombre;
+            ContApellido.text = accumulatedTextApellido;
+            ContUsuario.text = accumulatedTextUsuario;
+            ContContraseña.text = accumulatedTextContraseña;
+        }
+
+        public void EditarEstudiante()
+        {
+            // if (inputFNombre.text == "" || inputFApellido.text == "" || inputFCodigo.text == "" || inputFContraseña.text == "") {
+            //         txEditNotificacionError.text = "Llenar espacios en blanco";
+            // }else{
             EstudianteData estudianteEditarDatos = listaEstudiantes.FirstOrDefault(
-                                                estudiante => 
+                                                estudiante =>
                                                 estudiante.id_Estudiante.
                                                 ToString() == inputFEditar.text);
-            if(estudianteEditarDatos != null){
-                estudianteEditarDatos.Grado      = inputFEditGrado.text;
-                estudianteEditarDatos.Seccion    = inputFEditSeccion.text;
-                estudianteEditarDatos.Nombre     = inputFEditNombre.text;
-                estudianteEditarDatos.Apellido   = inputFEditApellido.text;
-                estudianteEditarDatos.Email      = inputFEditCodigo.text;
+            if (estudianteEditarDatos != null)
+            {
+                estudianteEditarDatos.Grado = inputFEditGrado.text;
+                estudianteEditarDatos.Seccion = inputFEditSeccion.text;
+                estudianteEditarDatos.Nombre = inputFEditNombre.text;
+                estudianteEditarDatos.Apellido = inputFEditApellido.text;
+                estudianteEditarDatos.Email = inputFEditCodigo.text;
                 estudianteEditarDatos.Contraseña = inputFEditContraseña.text;
-                
+
                 estudianteRepository.SaveDataEstudiante(listaEstudiantes);
                 estudianteRepository.LoadingDataEstudiante();
                 MostrarEstudiantes();
             }
-       // }
-    }
-    public void LlenarDatosEditarEstudiantes() {
-    //     List<EstudianteData> listLlenarEEstudiante = estudianteRepository.LoadingDataEstudiante();
-    //     foreach(var estudiante in listLlenarEEstudiante) {
-    //         if(estudiante.Id_Docente == idLoginUser){
-    //             if(estudiante.id_Estudiante.ToString == InputF_IDEditarE) {
-    //             }
-    //         }
-    //     }
-        // if(inputFEditar.text == "") {
-        //     txEditNotifiUREdit.text = "Llenar espacios en blanco";
-        // }else{
+            // }
+        }
+        public void LlenarDatosEditarEstudiantes()
+        {
+            //     List<EstudianteData> listLlenarEEstudiante = estudianteRepository.LoadingDataEstudiante();
+            //     foreach(var estudiante in listLlenarEEstudiante) {
+            //         if(estudiante.Id_Docente == idLoginUser){
+            //             if(estudiante.id_Estudiante.ToString == InputF_IDEditarE) {
+            //             }
+            //         }
+            //     }
+            // if(inputFEditar.text == "") {
+            //     txEditNotifiUREdit.text = "Llenar espacios en blanco";
+            // }else{
             EstudianteData estudianteLlenarDatos = listaEstudiantes.FirstOrDefault(
-                                                estudiante => 
+                                                estudiante =>
                                                 estudiante.id_Estudiante.
                                                 ToString() == inputFEditar.text);
-            if(estudianteLlenarDatos != null){
-                inputFEditGrado.text       = estudianteLlenarDatos.Grado;
-                inputFEditSeccion.text     = estudianteLlenarDatos.Seccion;
-                inputFEditNombre.text      = estudianteLlenarDatos.Nombre;
-                inputFEditApellido.text    = estudianteLlenarDatos.Apellido;
-                inputFEditCodigo.text      = estudianteLlenarDatos.Email;
-                inputFEditContraseña.text  = estudianteLlenarDatos.Contraseña; 
+            if (estudianteLlenarDatos != null)
+            {
+                inputFEditGrado.text = estudianteLlenarDatos.Grado;
+                inputFEditSeccion.text = estudianteLlenarDatos.Seccion;
+                inputFEditNombre.text = estudianteLlenarDatos.Nombre;
+                inputFEditApellido.text = estudianteLlenarDatos.Apellido;
+                inputFEditCodigo.text = estudianteLlenarDatos.Email;
+                inputFEditContraseña.text = estudianteLlenarDatos.Contraseña;
                 windowsController.MostrarVenActualizarEstudiante();
-            }else{
+            }
+            else
+            {
                 txEditNotifiUREdit.text = "Estudiante no Encontrado";
             }
-        //}
-    }
-    public void EliminarEstudiante() {
-        //List<EstudianteData> listAEliminar = estudianteRepository.LoadingDataEstudiante();
-        EstudianteData estudianteEliminar = listaEstudiantes.FirstOrDefault(estudiante => estudiante.id_Estudiante.ToString() == inputFEditar.text);
-        if(estudianteEliminar != null){
-            listaEstudiantes.Remove(estudianteEliminar);
-            estudianteRepository.DeleteDataEstudiante();
-            estudianteRepository.SaveDataEstudiante(listaEstudiantes);
-            estudianteRepository.LoadingDataEstudiante();
-            MostrarEstudiantes();
+            //}
+        }
+        public void EliminarEstudiante()
+        {
+            //List<EstudianteData> listAEliminar = estudianteRepository.LoadingDataEstudiante();
+            EstudianteData estudianteEliminar = listaEstudiantes.FirstOrDefault(estudiante => estudiante.id_Estudiante.ToString() == inputFEditar.text);
+            if (estudianteEliminar != null)
+            {
+                listaEstudiantes.Remove(estudianteEliminar);
+                estudianteRepository.DeleteDataEstudiante();
+                estudianteRepository.SaveDataEstudiante(listaEstudiantes);
+                estudianteRepository.LoadingDataEstudiante();
+                MostrarEstudiantes();
+            }
+        }
+
+        public void Mayus(TMP_InputField inputFAMayus)
+        {
+            inputFAMayus.text = inputFAMayus.text.ToUpper();
+        }
+        public void Minus(TMP_InputField inputFAMinus)
+        {
+            inputFAMinus.text = inputFAMinus.text.ToLower();
+        }
+        public void vaciarEspacios()
+        {
+            inputFNombre.text = "";
+            inputFApellido.text = "";
+            inputFCodigo.text = "";
+            inputFContraseña.text = "";
+        }
+        public void gIdDocente()
+        {
+            idLoginUser = iniciarSesionController.loginData.ObtenerLoginID();
+            Debug.Log("LoginDataEstudiante: " + idLoginUser);
+        }
+        public void MostrarListaEnLog()
+        {
+            foreach (var estudiante in listaEstudiantes)
+            {
+                Debug.Log($"Estudiante_Registrar - ID: {estudiante.id_Estudiante}, Nombre: {estudiante.Nombre}, Apellido: {estudiante.Apellido}, User: {estudiante.Email}, Pass: {estudiante.Contraseña}, Id_Doc: {estudiante.Id_Docente}");
+            }
         }
     }
 
-    public void Mayus(TMP_InputField inputFAMayus){
-        inputFAMayus.text = inputFAMayus.text.ToUpper();
-    }
-    public void Minus(TMP_InputField inputFAMinus){
-        inputFAMinus.text = inputFAMinus.text.ToLower();
-    }
-    public void vaciarEspacios(){
-            inputFNombre.text       = "";
-            inputFApellido.text     = "";
-            inputFCodigo.text       = "";
-            inputFContraseña.text   = "";
-    }
-    public void gIdDocente(){
-        idLoginUser = iniciarSesionController.loginData.ObtenerLoginID();
-        Debug.Log("LoginDataEstudiante: "+ idLoginUser);
-    }
-    public void MostrarListaEnLog()
-    {
-            foreach (var estudiante in listaEstudiantes){
-            Debug.Log($"Estudiante_Registrar - ID: {estudiante.id_Estudiante}, Nombre: {estudiante.Nombre}, Apellido: {estudiante.Apellido}, User: {estudiante.Email}, Pass: {estudiante.Contraseña}, Id_Doc: {estudiante.Id_Docente}");
-            }
-    }
 }
