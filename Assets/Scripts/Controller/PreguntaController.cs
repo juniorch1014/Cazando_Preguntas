@@ -13,9 +13,12 @@ public class PreguntaController : MonoBehaviour
     List<DocenteData> listDocentes = new List<DocenteData>();
     List<PreguntaData> listPreguntas = new List<PreguntaData>();
     List<AlternativasData> listAlternativas = new List<AlternativasData>();
+    LoginData loginData = new LoginData();
+
     public DocenteRepository docenteRepository;
     public PreguntaRepository preguntaRepository;
     public AltenativaRepository altenativaRepository;
+    public LoginRepository loginRepository;
 
     WindowsController windowsController;
     //RegistrarPregunta
@@ -39,16 +42,22 @@ public class PreguntaController : MonoBehaviour
     int idAlternativa = 0;
 
     //Mostrar Pregunta
-    public TMP_Text scrollVTMostrarPregunta;
+    public TMP_Text ContPID;
+    public TMP_Text ContPEnunciado;
+    public TMP_Text ContPRespuesta;
+    public TMP_Text ContPAltA;
+    public TMP_Text ContPAltB;
+    public TMP_Text ContPAltC;
+    public TMP_Text ContPAltD;
 
     // Start is called before the first frame update
     void Start()
     {
         windowsController = GetComponent<WindowsController>();
-        listDocentes     = docenteRepository.LoadingDataDocente();
+        listDocentes      = docenteRepository.LoadingDataDocente();
         listPreguntas     = preguntaRepository.LoadingDataPregunta();
         listAlternativas  = altenativaRepository.LoadingDataAltenativa();
-
+        loginData         = loginRepository.LoadDataLogin();
     }
 
     // Update is called once per frame
@@ -65,7 +74,7 @@ public class PreguntaController : MonoBehaviour
             //Preguntas
             idPregunta = listPreguntas.Count;
             PreguntaData preguntaData = new PreguntaData(idPregunta,
-                                                         idLoginUser,
+                                                         loginData.Id_Usuario,
                                                          inputFEnunciado.text,
                                                          inputFRespuesta.text);
             listPreguntas.Add(preguntaData);
@@ -81,21 +90,51 @@ public class PreguntaController : MonoBehaviour
                                                                     inputFaltD.text);
             listAlternativas.Add(alternativasData);
             altenativaRepository.SaveDataAltenativa(listAlternativas);
-            MostrarListaEnLog();
+            MostrarPreguntas();
             vaciarEspacios();
             windowsController.OcultarVenRegistrarPregunta();
         }
     }
     public void MostrarPreguntas(){
         List<PreguntaData> listP = preguntaRepository.LoadingDataPregunta();
-        string accumulatedText = "";
+        List<AlternativasData> listA = altenativaRepository.LoadingDataAltenativa();
+
+        string accumulatedTextPID        = "";
+        string accumulatedTextPEnunciado = "";
+        string accumulatedTextPRespuesta = "";
+        string accumulatedTextPAltA      = "";
+        string accumulatedTextPAltB      = "";
+        string accumulatedTextPAltC      = "";
+        string accumulatedTextPAltD      = "";
+
         foreach (var pregunta in listP){
-            if(pregunta.Id_Docente == idLoginUser){
-                accumulatedText += $"ID: {pregunta.Id_Pregunta}, Enunciado: {pregunta.Enunciado}, Respuesta: {pregunta.Respuesta}\n";
+            if(pregunta.Id_Docente == loginData.Id_Usuario)
+            {
+                accumulatedTextPID += $"{pregunta.Id_Pregunta}\n";
+                accumulatedTextPEnunciado += $"{pregunta.Enunciado}\n";
+                accumulatedTextPRespuesta += $"{pregunta.Respuesta}\n";
+
+                foreach (var alternativa in listA)
+                {
+                    if (alternativa.Id_Pregunta == pregunta.Id_Pregunta)
+                    {
+                        accumulatedTextPAltA += $"{alternativa.Alternativa_A}\n";
+                        accumulatedTextPAltB += $"{alternativa.Alternativa_B}\n";
+                        accumulatedTextPAltC += $"{alternativa.Alternativa_C}\n";
+                        accumulatedTextPAltD += $"{alternativa.Alternativa_D}\n";
+                    }
+                }
             }
         }
+        
+        ContPID.text = accumulatedTextPID;
+        ContPEnunciado.text = accumulatedTextPEnunciado;
+        ContPRespuesta.text = accumulatedTextPRespuesta;
+        ContPAltA.text = accumulatedTextPAltA;
+        ContPAltB.text = accumulatedTextPAltB;
+        ContPAltC.text = accumulatedTextPAltC;
+        ContPAltD.text = accumulatedTextPAltD;
         MostrarListaEnLog();
-        scrollVTMostrarPregunta.text = accumulatedText;
     }
 
     public void EditarPregunta () {
@@ -107,7 +146,7 @@ public class PreguntaController : MonoBehaviour
             {
                 Debug.Log("Llenar espacios en blanco");
             }else{
-                if(pregunta.Id_Docente == idLoginUser) {
+                if(pregunta.Id_Docente == loginData.Id_Usuario) {
 
                     if(pregunta.Id_Pregunta.ToString() == InputF_IDEditar.text) {
 
@@ -135,7 +174,7 @@ public class PreguntaController : MonoBehaviour
         List<AlternativasData> listLlenarEAlter = altenativaRepository.LoadingDataAltenativa();
 
         foreach(var pregunta in listLlenarEPregunta) {
-            if(pregunta.Id_Docente == idLoginUser) {
+            if(pregunta.Id_Docente == loginData.Id_Usuario) {
                 if(pregunta.Id_Pregunta.ToString() == InputF_IDEditar.text){
                     inputFEditEnun.text = pregunta.Enunciado;
                     inputFEditResp.text = pregunta.Respuesta;
@@ -171,8 +210,23 @@ public class PreguntaController : MonoBehaviour
                 altenativaRepository.SaveDataAltenativa(listAlternativas);
                 altenativaRepository.LoadingDataAltenativa();
             }
-            
+            listPreguntas.Remove(preguntaEliminar);
+            preguntaRepository.DeleteDataPregunta();
+            preguntaRepository.SaveDataPregunta(listPreguntas);
+            preguntaRepository.LoadingDataPregunta();
+            MostrarPreguntas();
         }
+    }
+
+
+
+    public void Mayus(TMP_InputField inputFAMayus)
+    {
+        inputFAMayus.text = inputFAMayus.text.ToUpper();
+    }
+    public void Minus(TMP_InputField inputFAMinus)
+    {
+        inputFAMinus.text = inputFAMinus.text.ToLower();
     }
     public void vaciarEspacios(){
         inputFEnunciado.text    = "";

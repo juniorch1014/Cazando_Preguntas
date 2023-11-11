@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class AutorizarJuegoData : MonoBehaviour
+public class AutorizarJuegoData
 {
     public int ID_AutJugar;
     public int ID_Docente;

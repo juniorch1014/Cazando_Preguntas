@@ -12,12 +12,12 @@ public class EstudianteRepository : MonoBehaviour
 
         if (File.Exists(destination)) {
             file = File.OpenWrite(destination);
-            Debug.Log("Save file saveDocente.dat");
+            Debug.Log("Save file saveEstudiante.dat");
 
         }
         else {
             file = File.Create(destination);
-            Debug.Log("Create file saveDocente.dat");
+            Debug.Log("Create file saveEstudiante.dat");
 
         }
         BinaryFormatter bf = new BinaryFormatter();
@@ -25,7 +25,7 @@ public class EstudianteRepository : MonoBehaviour
         file.Close();
    }
    public List<EstudianteData> LoadingDataEstudiante() {
-        Debug.Log("Loading file saveDocente.dat");
+        Debug.Log("Loading file saveEstudiante.dat");
         string destination = Application.persistentDataPath + "/saveEstudiante.dat";
         FileStream file;
 

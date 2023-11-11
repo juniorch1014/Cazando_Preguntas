@@ -8,11 +8,12 @@ public class IniciarSesionController : MonoBehaviour
 {   
     List<DocenteData> listaDocentes = new List<DocenteData>();
     List<EstudianteData> listaEstudiantes = new List<EstudianteData>();
-   
+    LoginData listaLogin = new LoginData();
 
     public LoginData loginData;
     public DocenteRepository docenteRepository;
     public EstudianteRepository estudianteRepository;
+    public LoginRepository loginRepository;
     public WindowsController wc;
     public TMP_Text txNotificacionError;
     public TMP_InputField InputF_ID;
@@ -25,7 +26,9 @@ public class IniciarSesionController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        listaDocentes = docenteRepository.LoadingDataDocente();
+        listaEstudiantes = estudianteRepository.LoadingDataEstudiante();
+        listaLogin = loginRepository.LoadDataLogin();
     }
 
     // Update is called once per frame
@@ -42,7 +45,7 @@ public class IniciarSesionController : MonoBehaviour
                 if (InputF_ID.text == docente.Email && InputF_Pass.text == docente.Contraseña) {
                     IniciarDocente();
                     loginData = new LoginData(docente.Id_Docente,"Docente");
-                    Debug.Log("LoginData: "+ loginData.ObtenerLoginID() + "-- Tipo: " + loginData.ObtenerLoginTipo());
+                    loginRepository.SaveDataLogin(loginData);
                     Limpiar();
                 }else{
                     txNotificacionError.text = "ID o Contrasela Erroneas";
@@ -55,7 +58,7 @@ public class IniciarSesionController : MonoBehaviour
                 if (InputF_ID.text == estudiante.Email && InputF_Pass.text == estudiante.Contraseña) {
                     IniciarAlumno();
                     loginData = new LoginData(estudiante.id_Estudiante,"Estudiante");
-                    Debug.Log("LoginData: "+ loginData.ObtenerLoginID() + "-- Tipo: " + loginData.ObtenerLoginTipo());
+                    loginRepository.SaveDataLogin(loginData);
                     Limpiar();
                 }else{
                     txNotificacionError.text = "ID o Contrasela Erroneas";
@@ -65,14 +68,17 @@ public class IniciarSesionController : MonoBehaviour
         } else{
              txNotificacionError.text = "Llenar los espacios en Blanco";
         }
+        listaLogin = loginRepository.LoadDataLogin();
+        MostrarLoginData(listaLogin);
+
         
        
     }
     public void Mostrarusuario (){
-        if(loginData.ObtenerLoginTipo() == "Docente"){
+        if(listaLogin.Tipo_Usuario == "Docente"){
             foreach (var docente in listaDocentes)
             {
-                if (docente.Id_Docente == loginData.ObtenerLoginID())
+                if (docente.Id_Docente == listaLogin.Id_Usuario)
                 {
                     txMostrarUsuario.text       = $"DOCENTE: {docente.Nombre} {docente.Apellido} ";
                     txMostrarUsuarioR.text      = $"DOCENTE: {docente.Nombre} {docente.Apellido} ";
@@ -80,14 +86,14 @@ public class IniciarSesionController : MonoBehaviour
                 }
             }
         }
-        if(loginData.ObtenerLoginTipo() == "Estudiante"){
+        if(listaLogin.Tipo_Usuario == "Estudiante"){
             foreach (var estudiante in listaEstudiantes)
             {
-                if (estudiante.id_Estudiante == loginData.ObtenerLoginID())
+                if (estudiante.id_Estudiante == listaLogin.Id_Usuario)
                 {
-                   txMostrarUsuario.text       = $"DOCENTE: {estudiante.Nombre}{estudiante.Apellido} ";
-                   txMostrarUsuarioR.text      = $"DOCENTE: {estudiante.Nombre}{estudiante.Apellido} ";
-                   txMostrarUsuarioCRUDEs.text = $"DOCENTE: {estudiante.Nombre}{estudiante.Apellido} ";  
+                   txMostrarUsuario.text       = $"ESTUDIANTE: {estudiante.Nombre} {estudiante.Apellido} ";
+                   txMostrarUsuarioR.text      = $"ESTUDIANTE: {estudiante.Nombre} {estudiante.Apellido} ";
+                   txMostrarUsuarioCRUDEs.text = $"ESTUDIANTE: {estudiante.Nombre} {estudiante.Apellido} ";  
                  }
             }
         }
@@ -113,5 +119,8 @@ public class IniciarSesionController : MonoBehaviour
     public void MostrarListaEstudiante(EstudianteData estudiante)
     {
             Debug.Log($"Estudiante--ID: {estudiante.id_Estudiante}, Nombre: {estudiante.Nombre}, Apellido: {estudiante.Apellido}, User: {estudiante.Email}, Pass: {estudiante.Contraseña}");  
+    }
+    public void MostrarLoginData(LoginData login) {
+        Debug.Log($"IDLogin: {login.Id_Usuario}, Tipo: {login.Tipo_Usuario}");
     }
 }

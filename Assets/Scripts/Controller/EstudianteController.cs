@@ -14,9 +14,12 @@ namespace Controller {
 
         List<DocenteData> listaDocentes = new List<DocenteData>();
         List<EstudianteData> listaEstudiantes = new List<EstudianteData>();
+        LoginData loginData = new LoginData();
 
         public DocenteRepository docenteRepository;
         public EstudianteRepository estudianteRepository;
+        public LoginRepository loginRepository;
+
         WindowsController windowsController;
         //Registrar Estudiante
         public TMP_Dropdown DropdUsuario;
@@ -66,6 +69,7 @@ namespace Controller {
             windowsController = GetComponent<WindowsController>();
             listaDocentes = docenteRepository.LoadingDataDocente();
             listaEstudiantes = estudianteRepository.LoadingDataEstudiante();
+            loginData = loginRepository.LoadDataLogin();
             MostrarListaEnLog();
         }
 
@@ -124,17 +128,17 @@ namespace Controller {
         public void MostrarEstudiantes()
         {
             List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
-            string accumulatedTextID = "";
-            string accumulatedTextGrado = "";
-            string accumulatedTextSeccion = "";
-            string accumulatedTextNombre = "";
-            string accumulatedTextApellido = "";
-            string accumulatedTextUsuario = "";
+            string accumulatedTextID         = "";
+            string accumulatedTextGrado      = "";
+            string accumulatedTextSeccion    = "";
+            string accumulatedTextNombre     = "";
+            string accumulatedTextApellido   = "";
+            string accumulatedTextUsuario    = "";
             string accumulatedTextContraseña = "";
 
             foreach (var estudiante in listE)
             {
-                if (estudiante.Id_Docente == idLoginUser)
+                if (estudiante.Id_Docente == loginData.Id_Usuario)
                 {
                     accumulatedTextID += $"{estudiante.id_Estudiante}\n";
                     accumulatedTextGrado += $"{estudiante.Grado}\n";
@@ -157,19 +161,21 @@ namespace Controller {
         public void BuscarEstudiante()
         {
             List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
-            string accumulatedTextID = "";
-            string accumulatedTextGrado = "";
-            string accumulatedTextSeccion = "";
-            string accumulatedTextNombre = "";
-            string accumulatedTextApellido = "";
-            string accumulatedTextUsuario = "";
+            string accumulatedTextID         = "";
+            string accumulatedTextGrado      = "";
+            string accumulatedTextSeccion    = "";
+            string accumulatedTextNombre     = "";
+            string accumulatedTextApellido   = "";
+            string accumulatedTextUsuario    = "";
             string accumulatedTextContraseña = "";
 
             foreach (var estudiante in listE)
             {
-                if (estudiante.Id_Docente == idLoginUser)
+                if (estudiante.Id_Docente == loginData.Id_Usuario)
                 {
                     if (estudiante.id_Estudiante.ToString() == inputFBuscar.text
+                        || estudiante.Grado == inputFBuscar.text
+                        || estudiante.Seccion == inputFBuscar.text
                         || estudiante.Nombre == inputFBuscar.text
                         || estudiante.Apellido == inputFBuscar.text
                         || estudiante.Email == inputFBuscar.text
