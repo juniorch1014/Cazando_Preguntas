@@ -102,10 +102,14 @@ namespace Controller {
 
         public void Registrar_Est()
         {
-
+            loginData = loginRepository.LoadDataLogin();
             if (selectedValue == "Estudiante")
             {
-                if (inputFNombre.text == "" || inputFApellido.text == "" || inputFCodigo.text == "" || inputFContraseña.text == "")
+                if (inputFNombre.text == "" || inputFApellido.text == "" 
+                                            || inputFCodigo.text == "" 
+                                            || inputFContraseña.text == "" 
+                                            || inputFGrado.text == "" 
+                                            || inputFSeccion.text == "")
                 {
                     txNotificacionError.text = "Llenar espacios en blanco";
                 }
@@ -116,7 +120,15 @@ namespace Controller {
                 else
                 {
                     idEstudiante = listaEstudiantes.Count;
-                    EstudianteData estudianteData = new EstudianteData(idEstudiante, inputFGrado.text, inputFSeccion.text, inputFNombre.text, inputFApellido.text, inputFCodigo.text, inputFContraseña.text, idLoginUser);
+                    EstudianteData estudianteData = new EstudianteData(idEstudiante, 
+                                                                   inputFGrado.text, 
+                                                                 inputFSeccion.text, 
+                                                                  inputFNombre.text, 
+                                                                inputFApellido.text, 
+                                                                  inputFCodigo.text, 
+                                                              inputFContraseña.text,
+                                                                      "Desconectado",
+                                                               loginData.Id_Usuario);
                     listaEstudiantes.Add(estudianteData);
                     estudianteRepository.SaveDataEstudiante(listaEstudiantes);
                     MostrarListaEnLog();
@@ -127,6 +139,7 @@ namespace Controller {
         }
         public void MostrarEstudiantes()
         {
+            loginData = loginRepository.LoadDataLogin();
             List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
             string accumulatedTextID         = "";
             string accumulatedTextGrado      = "";
@@ -138,7 +151,7 @@ namespace Controller {
 
             foreach (var estudiante in listE)
             {
-                if (estudiante.Id_Docente == loginData.Id_Usuario)
+                if (estudiante.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente")
                 {
                     accumulatedTextID += $"{estudiante.id_Estudiante}\n";
                     accumulatedTextGrado += $"{estudiante.Grado}\n";
@@ -160,6 +173,7 @@ namespace Controller {
 
         public void BuscarEstudiante()
         {
+            loginData = loginRepository.LoadDataLogin();
             List<EstudianteData> listE = estudianteRepository.LoadingDataEstudiante();
             string accumulatedTextID         = "";
             string accumulatedTextGrado      = "";
@@ -171,7 +185,7 @@ namespace Controller {
 
             foreach (var estudiante in listE)
             {
-                if (estudiante.Id_Docente == loginData.Id_Usuario)
+                if (estudiante.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente")
                 {
                     if (estudiante.id_Estudiante.ToString() == inputFBuscar.text
                         || estudiante.Grado == inputFBuscar.text
@@ -212,6 +226,7 @@ namespace Controller {
 
         public void EditarEstudiante()
         {
+            loginData = loginRepository.LoadDataLogin();
             // if (inputFNombre.text == "" || inputFApellido.text == "" || inputFCodigo.text == "" || inputFContraseña.text == "") {
             //         txEditNotificacionError.text = "Llenar espacios en blanco";
             // }else{
@@ -221,21 +236,35 @@ namespace Controller {
                                                 ToString() == inputFEditar.text);
             if (estudianteEditarDatos != null)
             {
-                estudianteEditarDatos.Grado = inputFEditGrado.text;
-                estudianteEditarDatos.Seccion = inputFEditSeccion.text;
-                estudianteEditarDatos.Nombre = inputFEditNombre.text;
-                estudianteEditarDatos.Apellido = inputFEditApellido.text;
-                estudianteEditarDatos.Email = inputFEditCodigo.text;
-                estudianteEditarDatos.Contraseña = inputFEditContraseña.text;
+                if (estudianteEditarDatos.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente")
+                {
+                    estudianteEditarDatos.Grado = inputFEditGrado.text;
+                    estudianteEditarDatos.Seccion = inputFEditSeccion.text;
+                    estudianteEditarDatos.Nombre = inputFEditNombre.text;
+                    estudianteEditarDatos.Apellido = inputFEditApellido.text;
+                    estudianteEditarDatos.Email = inputFEditCodigo.text;
+                    estudianteEditarDatos.Contraseña = inputFEditContraseña.text;
 
-                estudianteRepository.SaveDataEstudiante(listaEstudiantes);
-                estudianteRepository.LoadingDataEstudiante();
-                MostrarEstudiantes();
+                    estudianteRepository.SaveDataEstudiante(listaEstudiantes);
+                    estudianteRepository.LoadingDataEstudiante();
+                    
+                    MostrarEstudiantes();
+                }
+
+                else
+                {
+                    txEditNotifiUREdit.text = "Estudiante no Encontrado";
+                }
+            }
+            else
+            {
+                txEditNotifiUREdit.text = "Estudiante no Encontrado";
             }
             // }
         }
         public void LlenarDatosEditarEstudiantes()
         {
+            loginData = loginRepository.LoadDataLogin();
             //     List<EstudianteData> listLlenarEEstudiante = estudianteRepository.LoadingDataEstudiante();
             //     foreach(var estudiante in listLlenarEEstudiante) {
             //         if(estudiante.Id_Docente == idLoginUser){
@@ -252,34 +281,56 @@ namespace Controller {
                                                 ToString() == inputFEditar.text);
             if (estudianteLlenarDatos != null)
             {
-                inputFEditGrado.text = estudianteLlenarDatos.Grado;
-                inputFEditSeccion.text = estudianteLlenarDatos.Seccion;
-                inputFEditNombre.text = estudianteLlenarDatos.Nombre;
-                inputFEditApellido.text = estudianteLlenarDatos.Apellido;
-                inputFEditCodigo.text = estudianteLlenarDatos.Email;
-                inputFEditContraseña.text = estudianteLlenarDatos.Contraseña;
-                windowsController.MostrarVenActualizarEstudiante();
+                if (estudianteLlenarDatos.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente")
+                {
+                    inputFEditGrado.text = estudianteLlenarDatos.Grado;
+                    inputFEditSeccion.text = estudianteLlenarDatos.Seccion;
+                    inputFEditNombre.text = estudianteLlenarDatos.Nombre;
+                    inputFEditApellido.text = estudianteLlenarDatos.Apellido;
+                    inputFEditCodigo.text = estudianteLlenarDatos.Email;
+                    inputFEditContraseña.text = estudianteLlenarDatos.Contraseña;
+                    windowsController.MostrarVenActualizarEstudiante();
+                    txEditNotifiUREdit.text = "Estudiante Encontrado";
+
+                }
+                else
+                {
+                    txEditNotifiUREdit.text = "Estudiante no Encontrado";
+                }
             }
             else
             {
                 txEditNotifiUREdit.text = "Estudiante no Encontrado";
             }
+
             //}
         }
         public void EliminarEstudiante()
         {
+            loginData = loginRepository.LoadDataLogin();
             //List<EstudianteData> listAEliminar = estudianteRepository.LoadingDataEstudiante();
             EstudianteData estudianteEliminar = listaEstudiantes.FirstOrDefault(estudiante => estudiante.id_Estudiante.ToString() == inputFEditar.text);
             if (estudianteEliminar != null)
             {
-                listaEstudiantes.Remove(estudianteEliminar);
-                estudianteRepository.DeleteDataEstudiante();
-                estudianteRepository.SaveDataEstudiante(listaEstudiantes);
-                estudianteRepository.LoadingDataEstudiante();
-                MostrarEstudiantes();
+                if (estudianteEliminar.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente")
+                {
+                    listaEstudiantes.Remove(estudianteEliminar);
+                    estudianteRepository.DeleteDataEstudiante();
+                    estudianteRepository.SaveDataEstudiante(listaEstudiantes);
+                    estudianteRepository.LoadingDataEstudiante();
+                    MostrarEstudiantes();
+                }
+                else
+                {
+                    txEditNotifiUREdit.text = "Estudiante no Encontrado";
+                }
+            }
+            else
+            {
+                txEditNotifiUREdit.text = "Estudiante no Encontrado";
             }
         }
-
+        
         public void Mayus(TMP_InputField inputFAMayus)
         {
             inputFAMayus.text = inputFAMayus.text.ToUpper();
@@ -304,7 +355,13 @@ namespace Controller {
         {
             foreach (var estudiante in listaEstudiantes)
             {
-                Debug.Log($"Estudiante_Registrar - ID: {estudiante.id_Estudiante}, Nombre: {estudiante.Nombre}, Apellido: {estudiante.Apellido}, User: {estudiante.Email}, Pass: {estudiante.Contraseña}, Id_Doc: {estudiante.Id_Docente}");
+                Debug.Log(message: $"Estudiante_Registrar - ID: {estudiante.id_Estudiante}, " +
+                                                      $"Nombre: {estudiante.Nombre}, " +
+                                                    $"Apellido: {estudiante.Apellido}, " +
+                                                        $"User: {estudiante.Email}, " +
+                                                        $"Pass: {estudiante.Contraseña}, " +
+                                                      $"Id_Doc: {estudiante.Id_Docente}, " +
+                                                      $"Estado: {estudiante.Estado}");
             }
         }
     }

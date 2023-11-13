@@ -10,6 +10,7 @@ public class DocenteController : MonoBehaviour
     List<EstudianteData> listaEstudiantes = new List<EstudianteData>();
 
     public DocenteRepository docenteRepository;
+    public EstudianteRepository estudianteRepository;
     WindowsController windowsController;
     public TMP_Dropdown DropdUsuario;
     public TMP_Text txNotificacionError;
@@ -31,6 +32,7 @@ public class DocenteController : MonoBehaviour
        // docenteRepository = GetComponent<DocenteRepository>();
         windowsController = GetComponent<WindowsController>();
         listaDocentes     = docenteRepository.LoadingDataDocente();
+        listaEstudiantes  = estudianteRepository.LoadingDataEstudiante();
         MostrarListaEnLog();
         // Agrega un listener para el evento de cambio en el Dropdown
        // DropdUsuario.onValueChanged.AddListener(OnDropdownValueChanged);
@@ -67,12 +69,18 @@ public class DocenteController : MonoBehaviour
                 txNotificacionError.text = "Llenar espacios en blanco";
             }else {
                 idDocente = listaDocentes.Count;
-                    DocenteData docenteData = new DocenteData(idDocente,inputFNombre.text, inputFApellido.text, inputFCodigo.text, inputFContraseña.text);
+                    DocenteData docenteData = new DocenteData(idDocente,
+                                                      inputFNombre.text, 
+                                                    inputFApellido.text, 
+                                                      inputFCodigo.text, 
+                                                  inputFContraseña.text,
+                                                         "Desconectado");
                     listaDocentes.Add(docenteData);
                     docenteRepository.SaveDataDocente(listaDocentes);
                     MostrarListaEnLog();
                     vaciarEspacios();
-                    windowsController.OcultarVenRegistrarDoc();    
+                    windowsController.OcultarVenRegistrarDoc(); 
+                    docenteRepository.LoadingDataDocente();
             }
                 
         }
@@ -106,8 +114,14 @@ public class DocenteController : MonoBehaviour
     {
         foreach (var docente in listaDocentes)
         {
-            Debug.Log($"Docente_Registrar - ID: {docente.Id_Docente}, Nombre: {docente.Nombre}, Apellido: {docente.Apellido}, User: {docente.Email}, Pass: {docente.Contraseña}");
+            Debug.Log($"Docente_Registrar - ID: {docente.Id_Docente}, " +
+                                      $"Nombre: {docente.Nombre}, " +
+                                    $"Apellido: {docente.Apellido}, " +
+                                        $"User: {docente.Email}, " +
+                                        $"Pass: {docente.Contraseña}, " +
+                                      $"Estado: {docente.Estado}");
 
         }
     }
+
 }

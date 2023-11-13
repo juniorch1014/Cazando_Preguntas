@@ -34,45 +34,106 @@ public class IniciarSesionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       // estudianteRepository.LoadingDataEstudiante();
+       // MostrarListaEnLogEstudiante();
     }
     public void IniciarSesionDocente() {
         listaDocentes   = docenteRepository.LoadingDataDocente();
 
-        if(InputF_ID.text != "" && InputF_Pass.text != ""){
+        if(InputF_ID.text != "" && InputF_Pass.text != "") 
+        {
             foreach (var docente in listaDocentes) {
-                MostrarListaDocentes(docente);
                 if (InputF_ID.text == docente.Email && InputF_Pass.text == docente.Contraseña) {
                     IniciarDocente();
                     loginData = new LoginData(docente.Id_Docente,"Docente");
                     loginRepository.SaveDataLogin(loginData);
+                    docente.Estado = "Conectado";
+                    docenteRepository.SaveDataDocente(listaDocentes);
                     Limpiar();
+
                 }else{
                     txNotificacionError.text = "ID o Contrasela Erroneas";
                 }
-                
+                MostrarListaDocentes(docente);
             }
             listaEstudiantes   = estudianteRepository.LoadingDataEstudiante();
             foreach (var estudiante in listaEstudiantes) {
-                MostrarListaEstudiante(estudiante);
                 if (InputF_ID.text == estudiante.Email && InputF_Pass.text == estudiante.Contraseña) {
                     IniciarAlumno();
                     loginData = new LoginData(estudiante.id_Estudiante,"Estudiante");
                     loginRepository.SaveDataLogin(loginData);
+                    estudiante.Estado = "Conectado";
+                    estudianteRepository.SaveDataEstudiante(listaEstudiantes);
                     Limpiar();
                 }else{
                     txNotificacionError.text = "ID o Contrasela Erroneas";
                 }
-                
+                MostrarListaEstudiante(estudiante);
+
             }
         } else{
              txNotificacionError.text = "Llenar los espacios en Blanco";
         }
         listaLogin = loginRepository.LoadDataLogin();
+        listaDocentes =  docenteRepository.LoadingDataDocente();
+        listaEstudiantes = estudianteRepository.LoadingDataEstudiante();
+        MostrarListaEnLogEstudiante();
+        MostrarLoginData(listaLogin);
+ 
+    }
+    public void Cerrar_Sesion()
+    {
+        listaLogin = loginRepository.LoadDataLogin();
+        listaDocentes = docenteRepository.LoadingDataDocente();
+        if (listaLogin.Tipo_Usuario == "Docente")
+        {
+            foreach (var docente in listaDocentes)
+            {
+
+                if (listaLogin.Id_Usuario == docente.Id_Docente)
+                {
+                    if (docente.Estado == "Conectado")
+                    {
+                        docente.Estado = "Desconectado";
+                        docenteRepository.SaveDataDocente(listaDocentes);
+                        listaDocentes = docenteRepository.LoadingDataDocente();
+                        loginRepository.DeleteDataLogin();
+
+                    }
+                }
+                MostrarListaDocentes(docente);
+
+            }
+        }
+        listaEstudiantes = estudianteRepository.LoadingDataEstudiante();
+
+        if (listaLogin.Tipo_Usuario == "Estudiante")
+        {
+            foreach (var estudiante in listaEstudiantes)
+            {
+                if (listaLogin.Id_Usuario == estudiante.id_Estudiante)
+                {
+                    if (estudiante.Estado == "Conectado")
+                    {
+                        estudiante.Estado = "Desconectado";
+                        estudianteRepository.SaveDataEstudiante(listaEstudiantes);
+                        listaEstudiantes = estudianteRepository.LoadingDataEstudiante();
+                        loginRepository.DeleteDataLogin();
+
+                    }
+                }
+                MostrarListaEstudiante(estudiante);
+
+            }
+        }
+        listaLogin = loginRepository.LoadDataLogin();
+        listaDocentes =  docenteRepository.LoadingDataDocente();
+        listaEstudiantes = estudianteRepository.LoadingDataEstudiante();
+        MostrarListaEnLogDocente();
+        MostrarListaEnLogEstudiante();
         MostrarLoginData(listaLogin);
 
         
-       
     }
     public void Mostrarusuario (){
         if(listaLogin.Tipo_Usuario == "Docente"){
@@ -114,13 +175,52 @@ public class IniciarSesionController : MonoBehaviour
     }
     public void MostrarListaDocentes(DocenteData docente)
     {
-            Debug.Log($"Docente--ID: {docente.Id_Docente}, Nombre: {docente.Nombre}, Apellido: {docente.Apellido}, User: {docente.Email}, Pass: {docente.Contraseña}");
+            Debug.Log($"Docente--ID: {docente.Id_Docente}, " +
+                           $"Nombre: {docente.Nombre}, " +
+                         $"Apellido: {docente.Apellido}, " +
+                             $"User: {docente.Email}, " +
+                             $"Pass: {docente.Contraseña}, " +
+                             $"Estado: {docente.Estado}");
     }
     public void MostrarListaEstudiante(EstudianteData estudiante)
     {
-            Debug.Log($"Estudiante--ID: {estudiante.id_Estudiante}, Nombre: {estudiante.Nombre}, Apellido: {estudiante.Apellido}, User: {estudiante.Email}, Pass: {estudiante.Contraseña}");  
+            Debug.Log($"Estudiante--ID: {estudiante.id_Estudiante}, " +
+                              $"Nombre: {estudiante.Nombre}, " +
+                            $"Apellido: {estudiante.Apellido}, " +
+                                $"User: {estudiante.Email}, " +
+                                $"Pass: {estudiante.Contraseña}, " +
+                              $"Estado: {estudiante.Estado}");  
     }
     public void MostrarLoginData(LoginData login) {
-        Debug.Log($"IDLogin: {login.Id_Usuario}, Tipo: {login.Tipo_Usuario}");
+        Debug.Log($"IDLogin: {login.Id_Usuario}, " +
+                     $"Tipo: {login.Tipo_Usuario}");
+    }
+    public void MostrarListaEnLogDocente()
+    {
+        listaDocentes = docenteRepository.LoadingDataDocente();
+        foreach (var docente in listaDocentes)
+        {
+            Debug.Log($"Docente_IniciarSesion - ID: {docente.Id_Docente}, " +
+                                      $"Nombre: {docente.Nombre}, " +
+                                    $"Apellido: {docente.Apellido}, " +
+                                        $"User: {docente.Email}, " +
+                                        $"Pass: {docente.Contraseña}, " +
+                                      $"Estado: {docente.Estado}");
+
+        }
+    }
+    public void MostrarListaEnLogEstudiante()
+    {
+        listaEstudiantes = estudianteRepository.LoadingDataEstudiante();
+        foreach (var estudiante in listaEstudiantes)
+        {
+            Debug.Log(message: $"Estudiante_IniciarSesion - ID: {estudiante.id_Estudiante}, " +
+                                                  $"Nombre: {estudiante.Nombre}, " +
+                                                $"Apellido: {estudiante.Apellido}, " +
+                                                    $"User: {estudiante.Email}, " +
+                                                    $"Pass: {estudiante.Contraseña}, " +
+                                                  $"Id_Doc: {estudiante.Id_Docente}, " +
+                                                  $"Estado: {estudiante.Estado}");
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,22 +9,30 @@ public class GameController : MonoBehaviour
 {
     public GameWindowController gameWindowController;
 
+
     List<DocenteData> listaDocente = new List<DocenteData>();
     List<EstudianteData> listaEstudiante = new List<EstudianteData>();
     List<PreguntaData> listaPregunta = new List<PreguntaData>();
     List<AlternativasData> listaAlternativa = new List<AlternativasData>();
+    List<EvaluacionData> listaEvaluaciones = new List<EvaluacionData>();
     List<AsignarPreguntaData> listaAsignarPregunta = new List<AsignarPreguntaData>();
     LoginData loginData = new LoginData();
+    AsignarData asignarData = new AsignarData();
+
+    public string PillarName;
 
 
     public DocenteRepository docenteRepository;
     public EstudianteRepository estudianteRepository;
     public PreguntaRepository preguntaRepository;
     public AltenativaRepository altenativaRepository;
+    public EvaluacionRepository evaluacionRepository;
     public AsignarPreguntaRepository asignarpreguntaRepository;
     public LoginRepository loginRepository;
+    public AsignarRepository asignarRepository;
 
     public TMP_Text idAP;
+    public TMP_Text idPillar;
 
     public TMP_Text contenidoEnunciado;
     public Toggle AlternA;
@@ -31,7 +40,12 @@ public class GameController : MonoBehaviour
     public Toggle AlternC;
     public Toggle AlternD;
 
-    public ToggleGroup AlternGroup; 
+    public ToggleGroup AlternGroup;
+
+    public TMP_Text txEvaluacion;
+    public TMP_Text contenidoIDEst;
+    public TMP_Text contenidoNombres;
+    public TMP_Text contenidoPuntaja;
 
 
     // Start is called before the first frame update
@@ -41,78 +55,229 @@ public class GameController : MonoBehaviour
         listaEstudiante  = estudianteRepository.LoadingDataEstudiante();
         listaPregunta    = preguntaRepository.LoadingDataPregunta();
         listaAlternativa = altenativaRepository.LoadingDataAltenativa();
+        listaEvaluaciones = evaluacionRepository.LoadingDataEvaluacion();
         listaAsignarPregunta = asignarpreguntaRepository.LoadingDataAsignarPregunta();
         loginData = loginRepository.LoadDataLogin();
+        asignarData = asignarRepository.LoadDataAsignarData();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        LlenarTablaPuntuacion();
     }
 
     public void LlenarDatos_CazandoPreguntas(int indiceAsig)
     {
-        foreach (var asignarPregunta in listaAsignarPregunta)
+        listaEvaluaciones = evaluacionRepository.LoadingDataEvaluacion();
+        asignarData = asignarRepository.LoadDataAsignarData();
+        foreach (var evaluacion in listaEvaluaciones)
         {
-            if (asignarPregunta.ID_AsigPregunta == indiceAsig && asignarPregunta.ID_Estudiante == loginData.Id_Usuario)
+            Debug.Log($"NombreEva_Juego: {asignarData.NombreEvaluacion}");
+
+            if (evaluacion.Nombre == asignarData.NombreEvaluacion)
             {
-                foreach (var pregunta in listaPregunta)
+                foreach (var asignarPreg in evaluacion.AsignarPregunta)
                 {
-                    if (asignarPregunta.ID_Pregunta == pregunta.Id_Pregunta)
+                    if (asignarPreg.Estado == "NoResuelta" && asignarPreg.ID_Estudiante == loginData.Id_Usuario)
                     {
-                        contenidoEnunciado.text = pregunta.Enunciado;
-                        foreach (var alternativa in listaAlternativa)
+                        foreach (var pregunta in listaPregunta)
                         {
-                            if (pregunta.Id_Pregunta == alternativa.Id_Pregunta)
+                            if (asignarPreg.ID_Pregunta == pregunta.Id_Pregunta)
                             {
-                                AlternA.GetComponentInChildren<Text>().text = alternativa.Alternativa_A;
-                                AlternB.GetComponentInChildren<Text>().text = alternativa.Alternativa_B;
-                                AlternC.GetComponentInChildren<Text>().text = alternativa.Alternativa_C;
-                                AlternD.GetComponentInChildren<Text>().text = alternativa.Alternativa_D;
+                                contenidoEnunciado.text = pregunta.Enunciado;
+                                foreach (var alternativa in listaAlternativa)
+                                {
+                                    if (pregunta.Id_Pregunta == alternativa.Id_Pregunta)
+                                    {
+                                        AlternA.GetComponentInChildren<Text>().text = alternativa.Alternativa_A;
+                                        AlternB.GetComponentInChildren<Text>().text = alternativa.Alternativa_B;
+                                        AlternC.GetComponentInChildren<Text>().text = alternativa.Alternativa_C;
+                                        AlternD.GetComponentInChildren<Text>().text = alternativa.Alternativa_D;
+                                    }
+                                }
                             }
                         }
+                        idAP.text = asignarPreg.ID_AsigPregunta.ToString();
                     }
                 }
             }
         }
         gameWindowController.MostrarVentanaC_Preguntas();
+
+
+
+        //foreach (var asignarPregunta in listaAsignarPregunta)
+        //{
+        //    if (asignarPregunta.Estado == "NoResuelta" && asignarPregunta.ID_Estudiante == loginData.Id_Usuario)
+        //    {
+        //        foreach (var pregunta in listaPregunta)
+        //        {
+        //            if (asignarPregunta.ID_Pregunta == pregunta.Id_Pregunta)
+        //            {
+        //                contenidoEnunciado.text = pregunta.Enunciado;
+        //                foreach (var alternativa in listaAlternativa)
+        //                {
+        //                    if (pregunta.Id_Pregunta == alternativa.Id_Pregunta)
+        //                    {
+        //                        AlternA.GetComponentInChildren<Text>().text = alternativa.Alternativa_A;
+        //                        AlternB.GetComponentInChildren<Text>().text = alternativa.Alternativa_B;
+        //                        AlternC.GetComponentInChildren<Text>().text = alternativa.Alternativa_C;
+        //                        AlternD.GetComponentInChildren<Text>().text = alternativa.Alternativa_D;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        idAP.text = asignarPregunta.ID_AsigPregunta.ToString();
+        //    }
+        //}
+        //gameWindowController.MostrarVentanaC_Preguntas();
     }
     public void ResponderPregunta()
     {
-        foreach (var asignarPregunta in listaAsignarPregunta)
+        listaEvaluaciones = evaluacionRepository.LoadingDataEvaluacion();
+        listaPregunta     = preguntaRepository.LoadingDataPregunta();
+        asignarData       = asignarRepository.LoadDataAsignarData();
+        foreach (var evaluacion in listaEvaluaciones)
         {
-            if (asignarPregunta.ID_AsigPregunta.ToString() == idAP.text && asignarPregunta.ID_Estudiante == loginData.Id_Usuario)
+            if (evaluacion.Nombre == asignarData.NombreEvaluacion)
             {
-                foreach (var pregunta in listaPregunta)
+                foreach (var asignarPre in evaluacion.AsignarPregunta)
                 {
-                    if (asignarPregunta.ID_Pregunta == pregunta.Id_Pregunta)
+                    if (asignarPre.ID_AsigPregunta.ToString() == idAP.text
+                        && asignarPre.ID_Estudiante == loginData.Id_Usuario)
                     {
-                        Toggle[] toggles = AlternGroup.GetComponentsInChildren<Toggle>();
-
-                        foreach (var toggle in toggles)
+                        foreach (var pregunta in listaPregunta)
                         {
-                            if (toggle.isOn)
+                            if (asignarPre.ID_Pregunta == pregunta.Id_Pregunta)
                             {
-                                Debug.Log("Toggle1: " + toggle.GetComponentInChildren<Text>().text);
-                                string SelecToggle = toggle.GetComponentInChildren<Text>().text;
-                                if (pregunta.Respuesta == SelecToggle)
+                                Toggle[] toggles = AlternGroup.GetComponentsInChildren<Toggle>();
+
+                                foreach (var toggle in toggles)
                                 {
-                                    Debug.Log("Respuesta Correcta");
-                                    asignarPregunta.Estado = "Resuelta";
-                                    asignarpreguntaRepository.SaveDataAsignarPregunta(listaAsignarPregunta);
+                                    if (toggle.isOn)
+                                    {
+                                        Debug.Log("Toggle1: " + toggle.GetComponentInChildren<Text>().text);
+                                        string SelecToggle = toggle.GetComponentInChildren<Text>().text;
+                                        if (pregunta.Respuesta == SelecToggle)
+                                        {
+                                            Debug.Log("Respuesta Correcta");
+                                            asignarPre.Estado = "Resuelta";
+                                            evaluacionRepository.SaveDataEvaluacion(listaEvaluaciones);
+                                            idPillar.text = "1";
+                                            gameWindowController.OcultarVentanaC_Preguntas();
+
+                                        }
+                                    }
                                 }
                             }
-                            
                         }
                     }
                 }
             }
         }
+        evaluacionRepository.LoadingDataEvaluacion();
+        //foreach (var asignarPregunta in listaAsignarPregunta)
+        //{
+        //    if (asignarPregunta.ID_AsigPregunta.ToString() == idAP.text 
+        //        && asignarPregunta.ID_Estudiante == loginData.Id_Usuario)
+        //    {
+        //        foreach (var pregunta in listaPregunta)
+        //        {
+        //            if (asignarPregunta.ID_Pregunta == pregunta.Id_Pregunta)
+        //            {
+        //                Toggle[] toggles = AlternGroup.GetComponentsInChildren<Toggle>();
+
+        //                foreach (var toggle in toggles)
+        //                {
+        //                    if (toggle.isOn)
+        //                    {
+        //                        Debug.Log("Toggle1: " + toggle.GetComponentInChildren<Text>().text);
+        //                        string SelecToggle = toggle.GetComponentInChildren<Text>().text;
+        //                        if (pregunta.Respuesta == SelecToggle)
+        //                        {
+        //                            Debug.Log("Respuesta Correcta");
+        //                            asignarPregunta.Estado = "Resuelta";
+        //                            asignarpreguntaRepository.SaveDataAsignarPregunta(listaAsignarPregunta);
+        //                        }
+        //                    }
+                            
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    public void LlenarTablaPuntuacion()
+    {
+        listaEvaluaciones = evaluacionRepository.LoadingDataEvaluacion();
+        listaEstudiante   = estudianteRepository.LoadingDataEstudiante();
+        asignarData       = asignarRepository.LoadDataAsignarData();
+        string accumulatedIdEst     = "";
+        string accumulatedNombreEst = "";
+        string accumulatedPuntaje   = "";
+
+        foreach (var evaluacion in listaEvaluaciones)
+        {   
+            if (evaluacion.Nombre == asignarData.NombreEvaluacion)
+            {
+                txEvaluacion.text = evaluacion.Nombre;
+                
+                foreach (var estudiante in listaEstudiante)
+                {
+                    int puntaje = 0;
+                    
+                    if (evaluacion.Id_Docente == estudiante.Id_Docente)
+                    {
+                        foreach (var asignarPre in evaluacion.AsignarPregunta)
+                        {
+                            if (asignarPre.ID_Estudiante == estudiante.id_Estudiante)
+                            {
+                                if (asignarPre.Estado == "Resuelta")
+                                {
+                                    puntaje++;
+                                }
+                                
+                            }
+                        }
+                        accumulatedIdEst += $"{estudiante.id_Estudiante}\n";
+                        accumulatedNombreEst += $"{estudiante.Nombre}\n";
+                        accumulatedPuntaje += $"{puntaje}\n";
+                    }
+                }
+            }
+
+        }
+        contenidoIDEst.text = accumulatedIdEst;
+        contenidoNombres.text = accumulatedNombreEst;
+        contenidoPuntaja.text = accumulatedPuntaje;
+
+        //foreach (var asignarPregunta in listaAsignarPregunta)
+        //{
+        //    foreach (var estudiante in listaEstudiante)
+        //    {
+        //        accumulatedIdEst += $"{estudiante.id_Estudiante}\nv";
+        //        accumulatedNombreEst += $"{estudiante.Nombre}\n";
+        //    }
+        //    contenidoIDEst.text   = accumulatedIdEst;
+        //    contenidoNombres.text = accumulatedNombreEst;
+        //}
+    }
+    public void Desactivar_Pillar(Collision2D coll)
+    {
+        Collider2D colliderObjetoPregunta = coll.collider;
+        if (colliderObjetoPregunta != null)
+        {
+            if (idPillar.text == "1")
+            {
+                colliderObjetoPregunta.isTrigger = true;
+            }
+        }
+        
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Pillar Preg 1")
         {
@@ -123,7 +288,6 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Pregunta 2");
             LlenarDatos_CazandoPreguntas(1);
-
         }
         if (collision.gameObject.name == "Pillar Preg 3")
         {
@@ -140,11 +304,13 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Pregunta 5");
             LlenarDatos_CazandoPreguntas(4);
+
         }
         if (collision.gameObject.name == "Pillar Preg 6")
         {
             Debug.Log("Pregunta 6");
             LlenarDatos_CazandoPreguntas(5);
+
         }
         if (collision.gameObject.name == "Pillar Preg 7")
         {
@@ -216,6 +382,91 @@ public class GameController : MonoBehaviour
             Debug.Log("Pregunta 20");
             LlenarDatos_CazandoPreguntas(19);
         }
+    }
+    public void OnCollisionStay2D(Collision2D collision)
+    {
+        
+        if (collision.gameObject.name == "Pillar Preg 1")
+        {   
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 2")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 3")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 4")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 5 - G")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 6")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 7")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 8")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 9")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 10 - G")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 11 - M")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 12")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 13")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 14")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Altar Preg 15")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 16")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 17")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 18")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Pillar Preg 19")
+        {
+            Desactivar_Pillar(collision);
+        }
+        if (collision.gameObject.name == "Altar Preg 20")
+        {
+            Desactivar_Pillar(collision);
+        }
+        idPillar.text = "0";
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -320,4 +571,5 @@ public class GameController : MonoBehaviour
             gameWindowController.OcultarVentanaC_Preguntas();
         }
     }
+
 }

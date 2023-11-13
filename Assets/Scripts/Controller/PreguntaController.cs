@@ -1,14 +1,11 @@
-using System.Net.Mail;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
 
-
 public class PreguntaController : MonoBehaviour
-{   
-    public IniciarSesionController iniciarSesionController; 
+{
+    public IniciarSesionController iniciarSesionController;
     int idLoginUser;
     List<DocenteData> listDocentes = new List<DocenteData>();
     List<PreguntaData> listPreguntas = new List<PreguntaData>();
@@ -28,6 +25,7 @@ public class PreguntaController : MonoBehaviour
     public TMP_InputField inputFaltB;
     public TMP_InputField inputFaltC;
     public TMP_InputField inputFaltD;
+    public TMP_Text txNotificacionRP;
 
     //EdItarPregunta
     public TMP_InputField InputF_IDEditar;
@@ -50,27 +48,34 @@ public class PreguntaController : MonoBehaviour
     public TMP_Text ContPAltC;
     public TMP_Text ContPAltD;
 
+    public TMP_InputField inputFBuscar;
+
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
         windowsController = GetComponent<WindowsController>();
-        listDocentes      = docenteRepository.LoadingDataDocente();
-        listPreguntas     = preguntaRepository.LoadingDataPregunta();
-        listAlternativas  = altenativaRepository.LoadingDataAltenativa();
-        loginData         = loginRepository.LoadDataLogin();
+        listDocentes = docenteRepository.LoadingDataDocente();
+        listPreguntas = preguntaRepository.LoadingDataPregunta();
+        listAlternativas = altenativaRepository.LoadingDataAltenativa();
+        loginData = loginRepository.LoadDataLogin();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    public void Registrar_Preguntas(){
-        
+    public void Registrar_Preguntas() {
+
+        loginData = loginRepository.LoadDataLogin();
+
         if (inputFEnunciado.text == "" || inputFRespuesta.text == "" || inputFaltA.text == " " || inputFaltB.text == "" || inputFaltC.text == "" || inputFaltD.text == "")
         {
-                Debug.Log("Llenar espacios en blanco");
-        }else{
+            txNotificacionRP.text = "Llenar espacios en blanco";
+        } else {
             //Preguntas
             idPregunta = listPreguntas.Count;
             PreguntaData preguntaData = new PreguntaData(idPregunta,
@@ -79,10 +84,10 @@ public class PreguntaController : MonoBehaviour
                                                          inputFRespuesta.text);
             listPreguntas.Add(preguntaData);
             preguntaRepository.SaveDataPregunta(listPreguntas);
-            
+
             //Alternativas
             idAlternativa = listAlternativas.Count;
-            AlternativasData alternativasData= new AlternativasData(idAlternativa,
+            AlternativasData alternativasData = new AlternativasData(idAlternativa,
                                                                     idPregunta,
                                                                     inputFaltA.text,
                                                                     inputFaltB.text,
@@ -95,20 +100,22 @@ public class PreguntaController : MonoBehaviour
             windowsController.OcultarVenRegistrarPregunta();
         }
     }
-    public void MostrarPreguntas(){
+    public void MostrarPreguntas() {
+
+        loginData = loginRepository.LoadDataLogin();
         List<PreguntaData> listP = preguntaRepository.LoadingDataPregunta();
         List<AlternativasData> listA = altenativaRepository.LoadingDataAltenativa();
 
-        string accumulatedTextPID        = "";
+        string accumulatedTextPID = "";
         string accumulatedTextPEnunciado = "";
         string accumulatedTextPRespuesta = "";
-        string accumulatedTextPAltA      = "";
-        string accumulatedTextPAltB      = "";
-        string accumulatedTextPAltC      = "";
-        string accumulatedTextPAltD      = "";
+        string accumulatedTextPAltA = "";
+        string accumulatedTextPAltB = "";
+        string accumulatedTextPAltC = "";
+        string accumulatedTextPAltD = "";
 
-        foreach (var pregunta in listP){
-            if(pregunta.Id_Docente == loginData.Id_Usuario)
+        foreach (var pregunta in listP) {
+            if (pregunta.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente")
             {
                 accumulatedTextPID += $"{pregunta.Id_Pregunta}\n";
                 accumulatedTextPEnunciado += $"{pregunta.Enunciado}\n";
@@ -126,7 +133,7 @@ public class PreguntaController : MonoBehaviour
                 }
             }
         }
-        
+
         ContPID.text = accumulatedTextPID;
         ContPEnunciado.text = accumulatedTextPEnunciado;
         ContPRespuesta.text = accumulatedTextPRespuesta;
@@ -136,17 +143,84 @@ public class PreguntaController : MonoBehaviour
         ContPAltD.text = accumulatedTextPAltD;
         MostrarListaEnLog();
     }
+    public void BuscarPregunta()
+    {
+        loginData = loginRepository.LoadDataLogin();
+        List<PreguntaData> listP = preguntaRepository.LoadingDataPregunta();
+        List<AlternativasData> listA = altenativaRepository.LoadingDataAltenativa();
 
+        string accumulatedTextPID = "";
+        string accumulatedTextPEnunciado = "";
+        string accumulatedTextPRespuesta = "";
+        string accumulatedTextPAltA = "";
+        string accumulatedTextPAltB = "";
+        string accumulatedTextPAltC = "";
+        string accumulatedTextPAltD = "";
+
+        foreach (var pregunta in listP)
+        {
+            if (pregunta.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente")
+            {
+                if (pregunta.Id_Pregunta.ToString() == inputFBuscar.text
+                    || pregunta.Enunciado == inputFBuscar.text
+                    || pregunta.Respuesta == inputFBuscar.text
+                    )
+                {
+                    accumulatedTextPID += $"{pregunta.Id_Pregunta}\n";
+                    accumulatedTextPEnunciado += $"{pregunta.Enunciado}\n";
+                    accumulatedTextPRespuesta += $"{pregunta.Respuesta}\n";
+
+                    foreach (var alternativa in listA)
+                    {
+                        if (alternativa.Id_Pregunta == pregunta.Id_Pregunta)
+                        {
+                            accumulatedTextPAltA += $"{alternativa.Alternativa_A}\n";
+                            accumulatedTextPAltB += $"{alternativa.Alternativa_B}\n";
+                            accumulatedTextPAltC += $"{alternativa.Alternativa_C}\n";
+                            accumulatedTextPAltD += $"{alternativa.Alternativa_D}\n";
+                        }
+                    }
+                }
+                if(inputFBuscar.text == "")
+                {
+                    accumulatedTextPID += $"{pregunta.Id_Pregunta}\n";
+                    accumulatedTextPEnunciado += $"{pregunta.Enunciado}\n";
+                    accumulatedTextPRespuesta += $"{pregunta.Respuesta}\n";
+
+                    foreach (var alternativa in listA)
+                    {
+                        if (alternativa.Id_Pregunta == pregunta.Id_Pregunta)
+                        {
+                            accumulatedTextPAltA += $"{alternativa.Alternativa_A}\n";
+                            accumulatedTextPAltB += $"{alternativa.Alternativa_B}\n";
+                            accumulatedTextPAltC += $"{alternativa.Alternativa_C}\n";
+                            accumulatedTextPAltD += $"{alternativa.Alternativa_D}\n";
+                        }
+                    }
+                }
+            }
+        }
+
+        ContPID.text = accumulatedTextPID;
+        ContPEnunciado.text = accumulatedTextPEnunciado;
+        ContPRespuesta.text = accumulatedTextPRespuesta;
+        ContPAltA.text = accumulatedTextPAltA;
+        ContPAltB.text = accumulatedTextPAltB;
+        ContPAltC.text = accumulatedTextPAltC;
+        ContPAltD.text = accumulatedTextPAltD;
+    }
     public void EditarPregunta () {
+
+        loginData = loginRepository.LoadDataLogin();
         List<PreguntaData> listEPregunta = preguntaRepository.LoadingDataPregunta();
         List<AlternativasData> listEAlternativa = altenativaRepository.LoadingDataAltenativa();
-        vaciarEspacios();
+      
         foreach(var pregunta in listEPregunta) {
             if(inputFEditEnun.text == "" || inputFEditResp.text == "" || inputFEditA.text == "" || inputFEditB.text == "" || inputFEditC.text == "" || inputFEditD.text == "") 
             {
                 Debug.Log("Llenar espacios en blanco");
             }else{
-                if(pregunta.Id_Docente == loginData.Id_Usuario) {
+                if(pregunta.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente") {
 
                     if(pregunta.Id_Pregunta.ToString() == InputF_IDEditar.text) {
 
@@ -164,17 +238,24 @@ public class PreguntaController : MonoBehaviour
                     }
                     preguntaRepository.SaveDataPregunta(listEPregunta);
                     altenativaRepository.SaveDataAltenativa(listEAlternativa);
-                }  
+                }
+                preguntaRepository.LoadingDataPregunta();
+                altenativaRepository.LoadingDataAltenativa();
+                MostrarPreguntas();
             }
             
+            
         }
+        vaciarEspacios();
     }
     public void LlenarDatosEditar () {
+
+        loginData = loginRepository.LoadDataLogin();
         List<PreguntaData> listLlenarEPregunta = preguntaRepository.LoadingDataPregunta();
         List<AlternativasData> listLlenarEAlter = altenativaRepository.LoadingDataAltenativa();
 
         foreach(var pregunta in listLlenarEPregunta) {
-            if(pregunta.Id_Docente == loginData.Id_Usuario) {
+            if(pregunta.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente") {
                 if(pregunta.Id_Pregunta.ToString() == InputF_IDEditar.text){
                     inputFEditEnun.text = pregunta.Enunciado;
                     inputFEditResp.text = pregunta.Respuesta;
@@ -200,21 +281,29 @@ public class PreguntaController : MonoBehaviour
                                         pregunta.Id_Pregunta.
                                         ToString() == InputF_IDEditar.text);
         if(preguntaEliminar != null){
-            AlternativasData alternativaEliminar = listAlternativas.FirstOrDefault(
+            if (preguntaEliminar.Id_Docente == loginData.Id_Usuario && loginData.Tipo_Usuario == "Docente")
+            {
+                AlternativasData alternativaEliminar = listAlternativas.FirstOrDefault(
                                                 alternativa =>
                                                 alternativa.Id_Pregunta
                                                 .ToString() == InputF_IDEditar.text);
-            if(alternativaEliminar != null){
-                listAlternativas.Remove(alternativaEliminar);
-                altenativaRepository.DeleteDataAltenativa();
-                altenativaRepository.SaveDataAltenativa(listAlternativas);
-                altenativaRepository.LoadingDataAltenativa();
+                if (alternativaEliminar != null)
+                {
+                    listAlternativas.Remove(alternativaEliminar);
+                    altenativaRepository.DeleteDataAltenativa();
+                    altenativaRepository.SaveDataAltenativa(listAlternativas);
+                    altenativaRepository.LoadingDataAltenativa();
+                }
+                listPreguntas.Remove(preguntaEliminar);
+                preguntaRepository.DeleteDataPregunta();
+                preguntaRepository.SaveDataPregunta(listPreguntas);
+                preguntaRepository.LoadingDataPregunta();
+                MostrarPreguntas();
             }
-            listPreguntas.Remove(preguntaEliminar);
-            preguntaRepository.DeleteDataPregunta();
-            preguntaRepository.SaveDataPregunta(listPreguntas);
-            preguntaRepository.LoadingDataPregunta();
-            MostrarPreguntas();
+            else
+            {
+                txNotificacion.text = "Estudiante no Encontrado";
+            }
         }
     }
 
@@ -246,11 +335,19 @@ public class PreguntaController : MonoBehaviour
     public void MostrarListaEnLog()
         {   
             foreach (var pregunta in listPreguntas) {
-                Debug.Log($"ID:{pregunta.Id_Pregunta}, IDDoc: {pregunta.Id_Docente}, Enunciado: {pregunta.Enunciado}, Respuesta: {pregunta.Respuesta}");
+                Debug.Log($"ID:{pregunta.Id_Pregunta}, " +
+                      $"IDDoc: {pregunta.Id_Docente}, " +
+                  $"Enunciado: {pregunta.Enunciado}, " +
+                  $"Respuesta: {pregunta.Respuesta}");
             }   
 
             foreach (var alternativa in listAlternativas) {
-                Debug.Log($"ID:{alternativa.Id_Alternativas}, IDPregunta: {alternativa.Id_Pregunta}, AltA: {alternativa.Alternativa_A}, AltB: {alternativa.Alternativa_B}, AltC: {alternativa.Alternativa_C}, AltD: {alternativa.Alternativa_D }");
+                Debug.Log($"ID:{alternativa.Id_Alternativas}, " +
+                 $"IDPregunta: {alternativa.Id_Pregunta}, " +
+                       $"AltA: {alternativa.Alternativa_A}, " +
+                       $"AltB: {alternativa.Alternativa_B}, " +
+                       $"AltC: {alternativa.Alternativa_C}, " +
+                       $"AltD: {alternativa.Alternativa_D }");
             }
         }
 }

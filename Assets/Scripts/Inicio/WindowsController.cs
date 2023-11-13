@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,10 @@ public class WindowsController : MonoBehaviour
     public GameObject ventanaMostrar_Estudiante;
     public GameObject ventanaActualizar_Estudiante;
     public GameObject ventanaUREditar_Pregunta;
+    public GameObject ventanaRegistrar_Evaluacion;
+    public GameObject ventanaCVer_Evaluacion;
+
+    public GameObject ventanaVer_Puntaje;
 
 
     public GameObject bt_Preguntas;
@@ -26,7 +31,15 @@ public class WindowsController : MonoBehaviour
     public GameObject bt_REstudiante;
     public GameObject bt_REstudianteText;
     public GameObject bt_CrearEvaluacion;
+    public GameObject bt_VerEvaluacion;
+    public GameObject bt_VerCVerEvaluacion;
+    public GameObject bt_EliminarCVerEvaluacion;
+    public GameObject bt_IniciarCVEvaluacion;
     public GameObject bt_Jugar;
+
+    public GameObject bt_JugarText;  
+    public static WindowsController instance;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,10 +64,13 @@ public class WindowsController : MonoBehaviour
         ventanaInicio.SetActive(true);
         ventanaInSesion.SetActive(false);
         ventanaLogin.SetActive(false);
-    }
+    }   
     public void OcultarVentanaInicio() {
         ventanaInicio.SetActive(false);
         ventanaLogin.SetActive(true);
+
+        ventanaCVer_Evaluacion.SetActive(false);
+        ventanaVer_Puntaje.SetActive(false);
     }
     //***Docente_Registrar
     public void MostrarVenRegistrarDoc() {
@@ -128,7 +144,11 @@ public class WindowsController : MonoBehaviour
         bt_REstudiante.SetActive(true);
         bt_REstudianteText.SetActive(true);
         bt_CrearEvaluacion.SetActive(true);
+        bt_VerEvaluacion.SetActive(true);
+        bt_VerCVerEvaluacion.SetActive(true);
+        bt_EliminarCVerEvaluacion.SetActive(true);
         bt_Jugar.SetActive(false);
+        bt_IniciarCVEvaluacion.SetActive(false);
 
     }
     public void OcultarBtPregunta() {
@@ -137,7 +157,11 @@ public class WindowsController : MonoBehaviour
         bt_REstudiante.SetActive(false);
         bt_REstudianteText.SetActive(false);
         bt_CrearEvaluacion.SetActive(false);
+        bt_VerEvaluacion.SetActive(false);
+        bt_VerCVerEvaluacion.SetActive(false);
+        bt_EliminarCVerEvaluacion.SetActive(false);
         bt_Jugar.SetActive(true);
+        bt_IniciarCVEvaluacion.SetActive(true);
     }
     //***PREGUTAS Registrar
     public void MostrarVenRegistrarPregunta() {
@@ -163,11 +187,43 @@ public class WindowsController : MonoBehaviour
         ventanaActualizar_Pregunta.SetActive(false);
         ventanaCRUD_Pregunta.SetActive(true);
     }
+    //***EVALUACION Registrar
+    public void MostrarVenRegistrarEvaluacion()
+    {
+        ventanaRegistrar_Evaluacion.SetActive(true);
+    }
+    public void OcultarVenRegistrarEvaluacion()
+    {
+        ventanaRegistrar_Evaluacion.SetActive(false);
+    }
+    //***EVALUACION VER
+    public void MostrarVenCVerEvaluacion()
+    {
+        ventanaCVer_Evaluacion.SetActive(true);
+    }
+    public void OcultarVenCVerEvaluacion()
+    {
+        ventanaCVer_Evaluacion.SetActive(false);
+    }
 
+    public void MostrarVenVerPuntaje()
+    {
+        ventanaVer_Puntaje.SetActive(true);
+        ventanaCVer_Evaluacion.SetActive(false);
+    }
+    public void OcultarVenVerPuntaje()
+    {
+        ventanaVer_Puntaje.SetActive(false);
+        ventanaCVer_Evaluacion.SetActive(true);
+    }
     public void ScenaJugar(string scena) {
         SceneManager.LoadScene(scena);
     }
-//***Salir
+
+
+
+
+    //***Salir
     public void SalirPlay(){
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

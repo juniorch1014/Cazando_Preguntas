@@ -11,17 +11,24 @@ public class DocenteData
     public string Apellido;
     public string Email;
     public string Contraseña;
+    public string Estado;
 
     public DocenteData() {
         
     }
-    public DocenteData(int idDocente, string nombre, string apellido, string email, string contraseña){
+    public DocenteData(int idDocente, 
+                       string nombre, 
+                     string apellido, 
+                        string email, 
+                   string contraseña,
+                       string estado){
         
         this.Id_Docente = idDocente;
         this.Nombre     = nombre;
         this.Apellido   = apellido;
         this.Email      = email;
-        this.Contraseña = contraseña;   
+        this.Contraseña = contraseña;
+        this.Estado     = estado;
         nextId++;
     }
 
