@@ -167,6 +167,7 @@ public class GameController : MonoBehaviour
                                             evaluacionRepository.SaveDataEvaluacion(listaEvaluaciones);
                                             idPillar.text = "1";
                                             gameWindowController.OcultarVentanaC_Preguntas();
+                                            gameWindowController.MostrarVentana_PreFelicidad();
 
                                         }
                                     }

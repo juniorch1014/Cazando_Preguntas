@@ -23983,6 +23983,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1738756342}
     m_Modifications:
+    - target: {fileID: 2144074174462823560, guid: 2d2eec64a6634584da6ce909bf67f5c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144074174462823560, guid: 2d2eec64a6634584da6ce909bf67f5c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144074174462823560, guid: 2d2eec64a6634584da6ce909bf67f5c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1360601081}
+    - target: {fileID: 2144074174462823560, guid: 2d2eec64a6634584da6ce909bf67f5c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144074174462823560, guid: 2d2eec64a6634584da6ce909bf67f5c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OcultarVentana_PreFelicidad
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144074174462823560, guid: 2d2eec64a6634584da6ce909bf67f5c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameWindowController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2144074174462823560, guid: 2d2eec64a6634584da6ce909bf67f5c9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6367237081254635389, guid: 2d2eec64a6634584da6ce909bf67f5c9,
         type: 3}
       propertyPath: m_Name
@@ -25883,6 +25918,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8966882846673388717, guid: 403080d7568a4f949b4bfc7128477a8c,
     type: 3}
   m_PrefabInstance: {fileID: 1065970439}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1068775447 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6367237081254635389, guid: 2d2eec64a6634584da6ce909bf67f5c9,
+    type: 3}
+  m_PrefabInstance: {fileID: 962929892}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1069409473
 MonoBehaviour:
@@ -34623,7 +34664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ventanaCazarPreguntas: {fileID: 814900988}
-  ventanaPreFelicitacion: {fileID: 0}
+  ventanaPreFelicitacion: {fileID: 1068775447}
   ventanaGanaste: {fileID: 0}
 --- !u!1001 &1369492698
 PrefabInstance:
@@ -38974,7 +39015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f969a6e1b55c5a04a993a367f65bfee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameWindowController: {fileID: 0}
+  gameWindowController: {fileID: 1360601081}
   PillarName: 
   docenteRepository: {fileID: 201078386}
   estudianteRepository: {fileID: 201078385}
