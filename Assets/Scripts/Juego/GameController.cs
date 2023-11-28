@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+   
         listaDocente     = docenteRepository.LoadingDataDocente();
         listaEstudiante  = estudianteRepository.LoadingDataEstudiante();
         listaPregunta    = preguntaRepository.LoadingDataPregunta();
@@ -160,16 +161,18 @@ public class GameController : MonoBehaviour
                                     {
                                         Debug.Log("Toggle1: " + toggle.GetComponentInChildren<Text>().text);
                                         string SelecToggle = toggle.GetComponentInChildren<Text>().text;
-                                        if (pregunta.Respuesta == SelecToggle)
-                                        {
-                                            Debug.Log("Respuesta Correcta");
-                                            asignarPre.Estado = "Resuelta";
-                                            evaluacionRepository.SaveDataEvaluacion(listaEvaluaciones);
-                                            idPillar.text = "1";
-                                            gameWindowController.OcultarVentanaC_Preguntas();
-                                            gameWindowController.MostrarVentana_PreFelicidad();
+                                  
+                                            if (pregunta.Respuesta == SelecToggle)
+                                            {
+                                                Debug.Log("Respuesta Correcta");
+                                                asignarPre.Estado = "Resuelta";
+                                                evaluacionRepository.SaveDataEvaluacion(listaEvaluaciones);
+                                                idPillar.text = "1";
+                                                gameWindowController.OcultarVentanaC_Preguntas();
+                                                gameWindowController.MostrarVentana_PreFelicidad();
 
-                                        }
+                                            }
+                                        
                                     }
                                 }
                             }
