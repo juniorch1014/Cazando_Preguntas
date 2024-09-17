@@ -79,6 +79,7 @@ public class GameController : MonoBehaviour
 
             if (evaluacion.Nombre == asignarData.NombreEvaluacion)
             {
+                int aux = 0;
                 foreach (var asignarPreg in evaluacion.AsignarPregunta)
                 {
                     if (asignarPreg.Estado == "NoResuelta" && asignarPreg.ID_Estudiante == loginData.Id_Usuario)
@@ -102,6 +103,16 @@ public class GameController : MonoBehaviour
                         }
                         idAP.text = asignarPreg.ID_AsigPregunta.ToString();
                     }
+                    else
+                    {
+                        if (aux == 20)
+                        {
+                            gameWindowController.MostrarVentana_Ganaste();
+                        }
+                        aux++;
+                        Debug.Log($"Puntaje:{aux} ");
+                    }
+                    
                 }
             }
         }
@@ -135,6 +146,27 @@ public class GameController : MonoBehaviour
         //}
         //gameWindowController.MostrarVentanaC_Preguntas();
     }
+    //public void VerificarEvaluacion()
+    //{
+    //    listaEstudiante = estudianteRepository.LoadingDataEstudiante();
+    //    loginData = loginRepository.LoadDataLogin();
+    //    listaEvaluaciones = evaluacionRepository.LoadingDataEvaluacion();
+
+    //    foreach (var evaluacion in listaEvaluaciones)
+    //    {
+    //        if(evaluacion.Nombre == asignarData.NombreEvaluacion)
+    //        {
+    //            foreach (var asignarPre in evaluacion.AsignarPregunta)
+    //            {
+    //                if (asignarPre.ID_AsigPregunta.ToString() == idAP.text
+    //                    && asignarPre.ID_Estudiante == loginData.Id_Usuario)
+    //                {
+
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
     public void ResponderPregunta()
     {
         listaEvaluaciones = evaluacionRepository.LoadingDataEvaluacion();
@@ -231,10 +263,11 @@ public class GameController : MonoBehaviour
                 
                 foreach (var estudiante in listaEstudiante)
                 {
-                    int puntaje = 0;
+                   
                     
                     if (evaluacion.Id_Docente == estudiante.Id_Docente)
                     {
+                        int puntaje = 0;
                         foreach (var asignarPre in evaluacion.AsignarPregunta)
                         {
                             if (asignarPre.ID_Estudiante == estudiante.id_Estudiante)
@@ -243,7 +276,6 @@ public class GameController : MonoBehaviour
                                 {
                                     puntaje++;
                                 }
-                                
                             }
                         }
                         accumulatedIdEst += $"{estudiante.id_Estudiante}\n";

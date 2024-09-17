@@ -37,7 +37,13 @@ public class WindowsController : MonoBehaviour
     public GameObject bt_IniciarCVEvaluacion;
     public GameObject bt_Jugar;
 
-    public GameObject bt_JugarText;  
+    public GameObject bt_JugarText;
+
+
+    //GU_IAS
+    public GameObject[] guias;
+
+
     public static WindowsController instance;
 
 
@@ -158,7 +164,7 @@ public class WindowsController : MonoBehaviour
         bt_REstudianteText.SetActive(false);
         bt_CrearEvaluacion.SetActive(false);
         bt_VerEvaluacion.SetActive(false);
-        bt_VerCVerEvaluacion.SetActive(false);
+        //bt_VerCVerEvaluacion.SetActive(false);
         bt_EliminarCVerEvaluacion.SetActive(false);
         bt_Jugar.SetActive(true);
         bt_IniciarCVEvaluacion.SetActive(true);
@@ -220,6 +226,42 @@ public class WindowsController : MonoBehaviour
         SceneManager.LoadScene(scena);
     }
 
+    private int currentPopupIndex = 0;
+
+    //******GU_IAS/
+    // Muestra la ventana emergente actual y oculta las demás
+    public void ShowCurrentPopup()
+    {
+        Debug.Log("sssss");
+        for (int i = 0; i < guias.Length; i++)
+        {
+            guias[i].SetActive(i == currentPopupIndex);
+        }
+        ventanaLogin.SetActive(false);
+    }
+
+    // Evento para cerrar la ventana emergente actual
+    public void OnCloseButtonClick()
+    {
+        // Puedes agregar lógica adicional aquí si es necesario
+        guias[currentPopupIndex].SetActive(false);
+        ventanaLogin.SetActive(true);
+    }
+    // Evento para avanzar a la siguiente ventana emergente
+    public void OnNextButtonClick()
+    {
+        currentPopupIndex = Mathf.Min(currentPopupIndex + 1, guias.Length - 1);
+        ShowCurrentPopup();
+    }
+
+    // Evento para retroceder a la ventana emergente anterior
+    public void OnBackButtonClick()
+    {
+        currentPopupIndex = Mathf.Max(currentPopupIndex - 1, 0);
+        ShowCurrentPopup();
+    }
+
+
 
 
 
@@ -231,5 +273,12 @@ public class WindowsController : MonoBehaviour
             Application.Quit();
         #endif
     }
+    // Llama a esta función para minimizar el juego
+    public void Minimizar()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+
+    }
+
 
 }
